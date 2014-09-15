@@ -1,7 +1,6 @@
 <div ng-controller="ThingController as thingCtrl">
-    {{thingCtrl}}
     <div class="row" ng-repeat="thing in thingCtrl.things">
-        <div jh-parent-thing model="thing"></div>
+    	<jh-parent-thing ng-model="thing"></jh-parent-thing>
     </div>
 </div>
 <div class="row" ng-controller="ThingCreateController as thingCreateCtrl">

@@ -45,3 +45,6 @@ tmp
 .DS_Store
 .idea
 .settings/
+
+*/.externalToolBuilders/*
+.tern-project

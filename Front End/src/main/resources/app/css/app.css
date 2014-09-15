@@ -28,3 +28,10 @@ hr {
 .header .btn-lg:hover {
   background-color: #D8D8D8;
 }
+.panel-body h1,
+.panel-body h2,
+.panel-body h3,
+.panel-body h4,
+.panel-body h5 {
+  margin: 0;
+}

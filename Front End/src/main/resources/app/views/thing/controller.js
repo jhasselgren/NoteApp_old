@@ -17,23 +17,30 @@
         });
 
     var thingMock =
-        {
-            name: 'Test Thing',
-            description: 'En mock för en thing',
-            type: 'text',
-            things:
-                [
-                    {
-                        name: 'Child 1',
-                        description: 'En mock för första barnet',
-                        type: 'text'
-                    },
-                    {
-                        name: 'Child 2',
-                        description: 'En mock för andra barnet',
-                        type: 'todo'
-                    }
-                ]
-        }
+    	[
+	        {
+	            name: 'Test Thing',
+	            description: 'En mock för en thing',
+	            type: 'text',
+	            things:
+	                [
+	                    {
+	                        name: 'Child 1',
+	                        description: 'En mock för första barnet',
+	                        type: 'text'
+	                    },
+	                    {
+	                        name: 'Child 2',
+	                        description: 'En mock för andra barnet',
+	                        type: 'todo'
+	                    }
+	                ]
+	        },
+	        {
+	        	name:'Test',
+	        	description: 'En mock för en thing',
+	            type: 'text'
+	        }
+        ]
 
 })();

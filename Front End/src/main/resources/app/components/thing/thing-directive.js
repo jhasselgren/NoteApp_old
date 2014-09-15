@@ -7,20 +7,18 @@
         .directive('jhParentThing', function(){
             return{
                 restrict: 'E',
-                templateUrl: 'thing-parent-directive.html',
-                scope:{
-                    model: '=thing'
-                }
+                templateUrl: 'components/thing/thing-parent-directive.html',
+                require: '^ngModel',
             }
         })
         .directive('jhThingText', function(){
             return {
-                restrict: 'A',
-                templateUrl: 'thing-text-directive.html',
-                scope: {
-                    model: '=thing'
+                restrict: 'E',
+                templateUrl: 'components/thing/thing-text-directive.html',
+                require: '^ngModel',
+                controller: function($scope){
+                	this.data = $scope;
                 }
             }
-
         })
 })();
