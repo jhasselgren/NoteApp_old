@@ -8,7 +8,7 @@
             return{
                 restrict: 'E',
                 templateUrl: 'components/thing/thing-parent-directive.html',
-                require: '^ngModel',
+                require: '^ngModel'
             }
         })
         .directive('jhThingText', function(){

@@ -4,6 +4,6 @@
 (function(){
     angular.module('noteApp', ['ngRoute', 'mgcrea.ngStrap', 'noteApp.ThingController', 'noteApp.directive.thing', 'noteApp.TodoController'])
         .config(function($routeProvider){
-            $routeProvider.otherwise({redirectTo: '/todo'})
+            $routeProvider.otherwise({redirectTo: '/todo'});
         })
 })();
