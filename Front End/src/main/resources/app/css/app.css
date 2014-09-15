@@ -1,0 +1,30 @@
+h4 {
+  margin-top: 25px;
+}
+hr {
+  margin-top: 40px;
+  margin-bottom: 40px;
+}
+.row {
+  margin-bottom: 20px;
+}
+.row .row {
+  margin-top: 10px;
+  margin-bottom: 0;
+}
+.ng-dirty .ng-invalid {
+  border-color: #aa0000;
+}
+.ng-dirty .ng-valid {
+  border-color: #00A000;
+}
+.header .btn-lg {
+  font-size: 20px;
+  border-color: #2E2E2E;
+  padding: 12px;
+  background-color: #848484;
+  color: #ffffff;
+}
+.header .btn-lg:hover {
+  background-color: #D8D8D8;
+}

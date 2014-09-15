@@ -1,0 +1,22 @@
+<div ng-controller="ThingController as thingCtrl">
+    {{thingCtrl}}
+    <div class="row" ng-repeat="thing in thingCtrl.things">
+        <div jh-parent-thing model="thing"></div>
+    </div>
+</div>
+<div class="row" ng-controller="ThingCreateController as thingCreateCtrl">
+    <h1>Create new Thing</h1>
+    <form name="thingForm" ng-submit="thingForm.$valid && addThing()">
+        <div class="form-group">
+            <label>Name</label>
+            <input class="form-control" ng-model="thingCreateCtrl.thing.name" required>
+        </div>
+        <div class="form-group">
+            <text-angular ng-model="thingCreateCtrl.thing.description" ta-toolbar="[['h3','h4','h5','h6','p','pre','quote'],['bold','italics', 'underline'],['ul','ol'],['justifyLeft','justifyCenter','justifyRight'],['html']]"></text-angular>
+        </div>
+        <div class="form-group">
+            <input class="btn btn-default" type="submit" value="Save">
+            <button class="btn btn-default">Cancel</button>
+        </div>
+    </form>
+</div>
