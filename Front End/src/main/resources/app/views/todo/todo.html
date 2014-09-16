@@ -1,0 +1,5 @@
+<div ng-controller="TodoViewController as viewCtrl">
+    {{viewCtrl.showList()}}
+    <list-todo jh-click="viewCtrl.openThing(id)"></list-todo>
+    <div ng-hide="viewCtrl.showList()">{{viewCtrl.id}}</div>
+</div>
