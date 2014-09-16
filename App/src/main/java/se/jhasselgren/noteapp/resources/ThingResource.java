@@ -46,7 +46,6 @@ public class ThingResource {
 			todoThing.addChild(childThing);
 		}
 		
-		
 		return Response.ok(thingDAO.create(todoThing)).build();
     }
     
@@ -69,11 +68,11 @@ public class ThingResource {
     public Response save(Thing thing){
     	thingDAO.create(thing);
     	return Response.ok(thing).build();
-	    }
+    }
 	    
 
     @Path("{parentId}/add")
-    @POST
+    @PUT
     @UnitOfWork
     public Response addChild(@PathParam(value = "parentId") Long id, Thing thing){
     	
@@ -101,5 +100,19 @@ public class ThingResource {
     public Response getAll(){
         List<Thing> things = thingDAO.findAll();
         return Response.ok(things).build();
+    }
+
+    @Path("{id}")
+    @GET
+    @UnitOfWork
+    public Response get(@PathParam("id") long id){
+        Thing thing = thingDAO.findById(id).orNull();
+
+        if(thing == null){
+            return Response.status(Response.Status.BAD_REQUEST).build();
+        }
+
+        return Response.ok(thing).build();
+
     }
 }
