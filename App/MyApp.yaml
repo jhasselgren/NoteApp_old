@@ -1,0 +1,33 @@
+server:
+  applicationConnectors:
+    - type: http
+      port: 8080
+  adminConnectors:
+    - type: http
+      port: 8081
+
+# Database settings.
+database:
+
+  # the name of your JDBC driver
+  driverClass: org.h2.Driver
+
+  # the username
+  user: noteapp
+
+  # the password
+  password: noteapp123
+
+  # the JDBC URL
+  url: jdbc:h2:./db/notepad
+
+  properties:
+    hibernate.hbm2ddl.auto: create-drop
+    hibernate.dialect: org.hibernate.dialect.H2Dialect
+
+logging:
+  level: INFO
+  loggers:
+    "se.jhasselgren.noteapp": DEBUG
+  appenders:
+    - type: console

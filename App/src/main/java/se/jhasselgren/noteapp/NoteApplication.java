@@ -6,10 +6,16 @@ import io.dropwizard.db.DataSourceFactory;
 import io.dropwizard.hibernate.HibernateBundle;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
+import se.jhasselgren.noteapp.core.CommentThing;
+import se.jhasselgren.noteapp.core.FileThing;
+import se.jhasselgren.noteapp.core.LinkThing;
+import se.jhasselgren.noteapp.core.TextThing;
 import se.jhasselgren.noteapp.core.Thing;
+import se.jhasselgren.noteapp.core.ToDoThing;
 import se.jhasselgren.noteapp.db.ThingDAO;
 import se.jhasselgren.noteapp.resources.HelloResource;
 import se.jhasselgren.noteapp.resources.ThingResource;
+import se.jhasselgren.noteapp.tasks.InitDataTask;
 
 /**
  * Created by jhas on 2014-09-12.
@@ -20,7 +26,7 @@ public class NoteApplication extends Application<NoteAppConfig> {
     }
 
     private final HibernateBundle<NoteAppConfig> hibernateBundle =
-            new HibernateBundle<NoteAppConfig>(Thing.class) {
+            new HibernateBundle<NoteAppConfig>(Thing.class, ToDoThing.class, TextThing.class, FileThing.class, CommentThing.class, LinkThing.class) {
                 @Override
                 public DataSourceFactory getDataSourceFactory(NoteAppConfig noteAppConfig) {
                     return noteAppConfig.getDatabase();
@@ -48,6 +54,8 @@ public class NoteApplication extends Application<NoteAppConfig> {
 
         environment.jersey().register(new HelloResource());
         environment.jersey().register(new ThingResource(thingDAO));
+        
+        environment.admin().addTask(new InitDataTask(thingDAO));
 
     }
 }

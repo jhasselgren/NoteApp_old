@@ -48,3 +48,6 @@ tmp
 
 */.externalToolBuilders/*
 .tern-project
+
+*.log
+App/db/*

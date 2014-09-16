@@ -1,17 +1,48 @@
 package se.jhasselgren.noteapp.core;
 
-import javax.annotation.Nullable;
-import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+
+
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
+import javax.persistence.ManyToOne;
+
+import org.joda.time.DateTime;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonSubTypes.Type;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
 /**
  * Created by jhas on 2014-09-13.
  */
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@JsonIgnoreProperties(ignoreUnknown=true)
+@JsonTypeInfo(
+		use = JsonTypeInfo.Id.NAME,
+		include = JsonTypeInfo.As.PROPERTY,
+		property = "type",
+		visible = true
+		
+		)
+@JsonSubTypes(
+		{
+			@Type(value = ToDoThing.class),
+			@Type(value = TextThing.class),
+			@Type(value = FileThing.class),
+			@Type(value = LinkThing.class),
+			@Type(value = CommentThing.class)
+		}
+		)
 public class Thing {
 
     @Id
@@ -19,24 +50,21 @@ public class Thing {
     private long id;
 
     private String name;
+    @Lob
     private  String description;
 
+    final private ThingType type; 
+    
+    private final long created = DateTime.now().getMillis();
+    
+    protected Thing(ThingType type){
+    	this.type = type;	
+    }
+    
     @ManyToOne(cascade = {CascadeType.ALL})
-    @JoinColumn(name="parent_id")
+    @JoinColumn(name="parentId", referencedColumnName="id", nullable = true)
     private Thing parent;
 
-    @OneToMany( mappedBy = "parent")
-    private Set<Thing> things = new HashSet<Thing>();
-
-    public Thing(String name, String description, Set<Thing> things) {
-        this();
-        this.name = name;
-        this.description = description;
-        this.things = things;
-    }
-
-    public Thing() {
-    }
 
     public long getId() {
         return id;
@@ -62,11 +90,23 @@ public class Thing {
         this.description = description;
     }
 
-    public Set<Thing> getThings() {
-        return things;
-    }
+    public ThingType getType() {
+		return type;
+	}
+    
+    @JsonIgnore
+	public Thing getParent() {
+		return parent;
+	}
 
-    public void setThings(Set<Thing> things) {
-        this.things = things;
-    }
+    @JsonIgnore
+	public void setParent(Thing parent) {
+		this.parent = parent;
+	}
+
+	public long getCreated() {
+		return created;
+	}
+	
+    
 }
