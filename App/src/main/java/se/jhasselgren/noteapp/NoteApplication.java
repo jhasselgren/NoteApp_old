@@ -30,8 +30,6 @@ public class NoteApplication extends Application<NoteAppConfig> {
     @Override
     public void initialize(Bootstrap<NoteAppConfig> bootstrap) {
         bootstrap.addBundle(new AssetsBundle("/app", "/", "index.html", "front-end"));
-       // bootstrap.addBundle(new AssetsBundle("/bower_components","/bower_components", null, "bower"));
-
         bootstrap.addBundle(hibernateBundle);
     }
 

@@ -4,23 +4,37 @@
 (function(){
     angular.module('noteApp.data', [])
         .service('dataService', function($http, $q, $log){
+
+            var observerCallbacks = [];
+
+            var notifyObservers = function(){
+                angular.forEach(observerCallbacks, function(callback){
+                    callback();
+                });
+            };
+
+            var currentThing;
+
             var service =
             {
-                currentThing: {},
                 listOfThings: {},
 
-                setCurrentThing: function(id){
-                	
-                    var thing = this.currentThing;
-                    
-                    var promise = $http.get('/api/thing/'+id).success(angular.bind(this, function(data){
-                    	this.currentThing = data;
-                    	return this.currentThing;
-                    }));
-                    
-                    return promise;
+                registerObserverCallback: function(callback){
+                    observerCallbacks.push(callback);
                 },
 
+                setCurrentThing: function(id){
+
+                    
+                    $http.get('/api/thing/'+id)
+                        .success(function(data){
+                            currentThing = data;
+                            notifyObservers();
+                        });
+                },
+                getCurrentThing: function(){
+                    return currentThing;
+                },
                 loadListOfThings: function(){
                     return $http.get('/api/thing/all');
                 }

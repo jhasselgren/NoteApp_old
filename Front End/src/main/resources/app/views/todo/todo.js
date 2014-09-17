@@ -11,7 +11,6 @@
             .when('/todo/:thingId', {
             	templateUrl: 'views/todo/todo-show.html',
             	controller: 'TodoShowController',
-            	controllerAs: 'viewCtrl'
             });
         })
         .controller('TodoListController', function($location){
@@ -19,23 +18,20 @@
             	$location.path('/todo/'+id);
             }
         })
-        .controller('TodoShowController', function($log, $location, dataService, $routeParams){
-        	function init(){
-	    		this.thingId = $routeParams.thingId;
-	    		
-	    		dataService.setCurrentThing(thingId)
-	        	.success(angular.bind(this, function(data){
-	        		this.currentTing = data;
-	        		$log.debug(this.currentTing);
-	        	}))
-	        	.error(function(msg, status){
-	        		$log.error(msg, status);
-	        		$location.path('/todo')
-	        	});
+        .controller('TodoShowController', function($scope, $log, $location, dataService, $routeParams){
+            var init = function(){
+                var thingId = $routeParams.thingId;
+                dataService.registerObserverCallback(updateCurrentThing);
+	    		dataService.setCurrentThing(thingId);
+
         	};
-        	
+
+            var updateCurrentThing = function(){
+                $scope.currentTing = dataService.getCurrentThing();
+            };
+
         	init();
-        	
+
         })
         .directive('listTodo', function(dataService){
             return {
