@@ -24,6 +24,6 @@ public class ThingDAO extends AbstractDAO<Thing> {
     }
 
     public List<Thing> findAll(){
-        return list(currentSession().createQuery("Select t FROM Thing t WHERE t.parent is null"));
+        return list(currentSession().createQuery("Select t FROM Thing t WHERE t.parent is null ORDER BY t.id ASC"));
     }
 }
