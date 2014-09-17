@@ -1,0 +1,15 @@
+<div class="row jumbotron">
+    <h1 id="1"><i class="fa fa-square-o"></i> {{todoCtrl.thing.name}}</h1>
+    <p>{{todoCtrl.thing.description}}<p>
+    <div class="progress">
+        <div class="progress-bar" role="progressbar" aria-valuenow="{{todoCtrl.thing.status}}" aria-valuemin="0" aria-valuemax="100">
+            <span class="sr-only">{{todoCtrl.thing.status}}% Complete</span>
+        </div>
+    </div>
+</div>
+<div ng-repeat="child in todoCtrl.thing.things" class="row">
+	<comment-thing thing="child" ng-if="child.type == 'COMMENT'"></comment-thing>
+	<file-thing thing="child" ng-if="child.type == 'FILE'"></file-thing>
+	<link-thing thing="child" ng-if="child.type == 'LINK'"></link-thing>
+	<text-thing thing="child" ng-if="child.type=='TEXT'"></text-thing>
+</div>

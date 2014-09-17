@@ -1,0 +1,11 @@
+<div class="col-xs-12">
+    <h5>
+        <i class="fa fa-comment-o fa-2x pull-left "></i>
+        <p ng-bind-html="thing.comment"></p> <small>- {{thing.sentBy}} | {{thing.created | date: 'yyyy-MM-dd HH:mm'}}</small>
+    </h5>
+    <p>
+        <span class="label label-info"><i class="fa fa-pencil"></i> Edit</span>
+        <span class="label label-info"><i class="fa fa-trash"></i> Delete</span>
+        <span class="label label-info"><i class="fa fa-ellipsis-h"></i></span>
+    </p>
+</div>

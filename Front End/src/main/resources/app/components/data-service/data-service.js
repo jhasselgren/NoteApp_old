@@ -10,17 +10,15 @@
                 listOfThings: {},
 
                 setCurrentThing: function(id){
+                	
                     var thing = this.currentThing;
-                    $http.get('/api/thing/'+id).then(function(response){
-                        if(typeof response.data === 'object'){
-                            thing = response.data;
-                        }
-                        else{
-                            return $q.reject(response.data);
-                        }
-                    }, function(response){
-                        return $q.reject(response.data);
-                    });
+                    
+                    var promise = $http.get('/api/thing/'+id).success(angular.bind(this, function(data){
+                    	this.currentThing = data;
+                    	return this.currentThing;
+                    }));
+                    
+                    return promise;
                 },
 
                 loadListOfThings: function(){
