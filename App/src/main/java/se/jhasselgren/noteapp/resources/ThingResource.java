@@ -64,7 +64,7 @@ public class ThingResource {
 			LinkThing childThing = new LinkThing();
 			childThing.setName("Google");
 			childThing.setLink("http://google.se");
-			childThing.setDescription("En l‰nk till google");
+			childThing.setDescription("En l√§nk till google");
 			todoThing.addChild(childThing);
 		}
 		
