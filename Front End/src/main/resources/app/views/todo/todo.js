@@ -97,8 +97,15 @@
 	        	scope: {
 	        		thing: '='
 	        	},
-	        	controller: function($scope){
-	        		
+	        	controller: function($scope, $aside){
+	        		$scope.edit = function(){
+                        var myAside = $modal({title: 'test', content: 'test test', animation: 'am-slide-left', template: 'views/todo/aside/edit-text-thing.tpl.html'});
+
+                        myAside.$promise.then(function(){
+                            myAside.show();
+                        });
+
+                    }
 	        	},
 	        	templateUrl: 'views/todo/tmpl/show-text-todo.tmpl.html',
         	};
