@@ -1,5 +1,5 @@
 (function(){
-    angular.module('noteApp.TodoController', ['ngRoute', 'mgcrea.ngStrap'])
+    var app = angular.module('noteApp.TodoController', ['ngRoute', 'mgcrea.ngStrap'])
 
         .config(function($routeProvider){
             $routeProvider
@@ -50,6 +50,31 @@
         	init();
 
         })
+        .controller('ThingDirectiveController', function($scope){
+            $scope.edit = function(thing){
+                $scope.save({thing: thing})
+            };
+
+            $scope.aside =  {
+                thing: angular.copy($scope.thing),
+                save: function(thing){
+                    $scope.edit(thing);
+                }
+            };
+
+            $scope.deletePopover = {
+                title: 'Delete',
+                name: $scope.thing.name,
+                call: function(){
+                    $scope.remove();
+                }
+            };
+
+            $scope.remove = function(){
+                var id = $scope.thing.id;
+                $scope.removeFn({id: id});
+            }
+        })
         .directive('listTodo', function(dataService){
             return {
                 restrict: 'E',
@@ -79,7 +104,6 @@
         .directive('showTodo', function(){
         	return{
 	        	restrict: 'E',
-	        	require: '^thing',
 	        	scope: {
         			thing: '=',
         			save: '&',
@@ -148,7 +172,8 @@
     				};
 	        		
 	        		$scope.remove = function(){
-	        			$scope.removeFn({id: $scope.thing.id});
+                        var id = $scope.thing.id;
+	        			$scope.removeFn({id: id});
 	        		}
 	        		
         		},

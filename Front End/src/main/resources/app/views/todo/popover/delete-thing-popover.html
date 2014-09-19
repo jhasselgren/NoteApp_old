@@ -1,12 +1,12 @@
-<div class="popover">
+<div class="popover col-xs-8 col-sm-4">
 	<div class="arrow"></div>
 	<h3 class="popover-title" ng-bind="title" ng-show="title"></h3>
 	<div class="popover-content">
-		Are you sure that you want to delete: {{name}}
+		<p>Are you sure that you want to delete: <br>
+            <strong>{{name}}</strong></p>
 		<div class="form-actions">
-			<button type="button" class="btn btn-primary" ng-click="$hide()">Close</button>
-			<button type="button" class="btn btn-danger"
-				ng-click="call();$hide()">Delete</button>
+            <a href class="label label-danger" ng-click="call();$hide()">Delete</a>
+            <a href class="label label-info" ng-click="$hide()">Close</a>
 		</div>
 	</div>
 </div>

@@ -8,8 +8,8 @@
     </div>
 </div>
 <div ng-repeat="child in todoCtrl.thing.things | orderBy:child.id" class="row">
-	<comment-thing thing="child" ng-if="child.type == 'COMMENT'"></comment-thing>
-	<file-thing thing="child" ng-if="child.type == 'FILE'"></file-thing>
-	<link-thing thing="child" ng-if="child.type == 'LINK'"></link-thing>
-	<text-thing thing="child" removeFn="todoCtrl.removeThing(id)" save="todoCtrl.edit(thing)" ng-if="child.type=='TEXT'"></text-thing>
+	<comment-thing thing="child" remove-fn="todoCtrl.removeThing(id)" save="todoCtrl.edit(thing)" ng-if="child.type == 'COMMENT'"></comment-thing>
+	<file-thing thing="child" remove-fn="todoCtrl.removeThing(id)" save="todoCtrl.edit(thing)" ng-if="child.type == 'FILE'"></file-thing>
+	<link-thing thing="child" remove-fn="todoCtrl.removeThing(id)" save="todoCtrl.edit(thing)" ng-if="child.type == 'LINK'"></link-thing>
+	<text-thing thing="child" remove-fn="todoCtrl.removeThing(id)" save="todoCtrl.edit(thing)" ng-if="child.type=='TEXT'"></text-thing>
 </div>
