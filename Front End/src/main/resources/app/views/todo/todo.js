@@ -13,22 +13,39 @@
             	controller: 'TodoShowController',
             });
         })
+        .config(function($asideProvider) {
+		  angular.extend($asideProvider.defaults, {
+		    container: 'body',
+		    html: true,
+		    backdrop: 'static'
+		  });
+		})
         .controller('TodoListController', function($location){
             this.openThing = function(id){
             	$location.path('/todo/'+id);
             }
         })
-        .controller('TodoShowController', function($scope, $log, $location, dataService, $routeParams){
+        .controller('TodoShowController', function($scope, $log, $location, dataService, $routeParams, $aside){
             var init = function(){
                 var thingId = $routeParams.thingId;
                 dataService.registerObserverCallback(updateCurrentThing);
 	    		dataService.setCurrentThing(thingId);
 
         	};
-
+        	
+        	
+        	
+        	$scope.save = function(thing){
+        		dataService.saveThing(thing);
+        	};
+        	
             var updateCurrentThing = function(){
                 $scope.currentTing = dataService.getCurrentThing();
             };
+            
+            $scope.deleteThing = function(id){
+            	dataService.deleteThing(id);
+            }
 
         	init();
 
@@ -64,7 +81,9 @@
 	        	restrict: 'E',
 	        	require: '^thing',
 	        	scope: {
-        			thing :'='
+        			thing: '=',
+        			save: '&',
+        			removeFn: '&'
         		},
         		templateUrl: 'views/todo/tmpl/show-todo.tmpl.html',
         		controller: function($scope, $log){
@@ -76,11 +95,19 @@
             			}
         			}));
         			
-        			this.thing = $scope.thing
+        			this.edit = function(thing){
+        				$scope.save({thing: thing});
+        			};
+        			
+        			this.removeThing = function(id){
+        				$scope.removeFn({id: id});
+        			};
+        			
+        			this.thing = $scope.thing;
         			
         			if(typeof this.thing != "undefined"){
         				this.progress = this.thing.status + '%';
-        			}
+        			};
         			
         			this.logName = function(){
                 		$log.info(this.thing);
@@ -95,18 +122,36 @@
         	return{
 	        	restrict: 'E',
 	        	scope: {
-	        		thing: '='
+	        		thing: '=',
+	        		removeFn: '&',
+	        		save: '&'
 	        	},
-	        	controller: function($scope, $aside){
-	        		$scope.edit = function(){
-                        var myAside = $modal({title: 'test', content: 'test test', animation: 'am-slide-left', template: 'views/todo/aside/edit-text-thing.tpl.html'});
-
-                        myAside.$promise.then(function(){
-                            myAside.show();
-                        });
-
-                    }
-	        	},
+	        	controller: function($scope){
+	        		
+	        		$scope.edit = function(thing){
+	        			$scope.save({thing: thing})
+	        		};
+	        		
+	        		$scope.aside =  {
+                			thing: angular.copy($scope.thing), 
+            				save: function(thing){
+            						$scope.edit(thing);
+    						}
+        			};
+	        		
+	        		$scope.deletePopover = {
+	        					title: 'Delete',
+	        					name: $scope.thing.name,
+	        					call: function(){
+	        						$scope.remove();
+	        					}
+    				};
+	        		
+	        		$scope.remove = function(){
+	        			$scope.removeFn({id: $scope.thing.id});
+	        		}
+	        		
+        		},
 	        	templateUrl: 'views/todo/tmpl/show-text-todo.tmpl.html',
         	};
         })

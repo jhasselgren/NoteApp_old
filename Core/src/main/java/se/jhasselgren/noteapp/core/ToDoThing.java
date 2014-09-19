@@ -27,6 +27,19 @@ public class ToDoThing extends Thing {
 		super(ThingType.TODO);	
 	}
 	
+	@Override
+	public void update(Thing thing) {
+		
+		if(thing instanceof ToDoThing){
+			ToDoThing inputThing = (ToDoThing) thing;
+			this.setName(inputThing.getName());
+			this.setDescription(inputThing.getDescription());
+		}
+		else{
+			throw new IllegalArgumentException("Input is not a instance of ToDoThing");
+		}
+	}
+	
 	public boolean isCompleted() {
 		return result != null;
 	}
@@ -66,5 +79,9 @@ public class ToDoThing extends Thing {
     public void addChild(Thing thing){
     	this.things.add(thing);
     	thing.setParent(this);
+    }
+    
+    public void removeChild(Thing thing){
+    	this.things.remove(thing);
     }
 }

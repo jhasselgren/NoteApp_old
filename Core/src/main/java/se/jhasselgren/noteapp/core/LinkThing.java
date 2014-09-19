@@ -14,6 +14,19 @@ public class LinkThing extends Thing {
 		super(ThingType.LINK);
 	}
 
+	@Override
+	public void update(Thing thing) {
+		
+		if(thing instanceof LinkThing){
+			LinkThing inputThing = (LinkThing) thing;
+			this.setName(inputThing.getName());
+			this.setDescription(inputThing.getDescription());
+		}
+		else{
+			throw new IllegalArgumentException("Input is not a instance of LinkThing");
+		}
+	}
+	
 	public String getLink() {
 		return link;
 	}

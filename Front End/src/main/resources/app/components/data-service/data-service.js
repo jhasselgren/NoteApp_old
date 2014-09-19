@@ -37,6 +37,20 @@
                 },
                 loadListOfThings: function(){
                     return $http.get('/api/thing/all');
+                },
+                saveThing: function(thing){
+                	$http.put('/api/thing/save',thing)
+                	.success(function(data){
+                		currentThing = data;
+                		notifyObservers();
+                	});
+                },
+                deleteThing: function(id){
+                	$http.delete('api/thing/delete/'+id)
+                		.success(function(data){
+                			currentThing = data;
+                			notifyObservers();
+                		});
                 }
             };
 

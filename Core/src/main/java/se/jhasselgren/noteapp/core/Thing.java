@@ -2,7 +2,6 @@ package se.jhasselgren.noteapp.core;
 
 
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -43,7 +42,7 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 			@Type(value = CommentThing.class)
 		}
 		)
-public class Thing {
+public abstract class Thing {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -61,10 +60,12 @@ public class Thing {
     	this.type = type;	
     }
     
-    @ManyToOne(cascade = {CascadeType.ALL})
+    @ManyToOne
     @JoinColumn(name="parentId", referencedColumnName="id", nullable = true)
     private Thing parent;
 
+    public abstract void update(Thing thing) throws IllegalArgumentException;
+    
 
     public long getId() {
         return id;

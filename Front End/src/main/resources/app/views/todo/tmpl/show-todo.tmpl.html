@@ -11,5 +11,5 @@
 	<comment-thing thing="child" ng-if="child.type == 'COMMENT'"></comment-thing>
 	<file-thing thing="child" ng-if="child.type == 'FILE'"></file-thing>
 	<link-thing thing="child" ng-if="child.type == 'LINK'"></link-thing>
-	<text-thing thing="child" ng-if="child.type=='TEXT'"></text-thing>
+	<text-thing thing="child" removeFn="todoCtrl.removeThing(id)" save="todoCtrl.edit(thing)" ng-if="child.type=='TEXT'"></text-thing>
 </div>

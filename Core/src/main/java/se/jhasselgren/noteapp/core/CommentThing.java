@@ -14,6 +14,19 @@ public class CommentThing extends Thing {
 	public CommentThing() {
 		super(ThingType.COMMENT);
 	}
+	
+	@Override
+	public void update(Thing thing) {
+		
+		if(thing instanceof CommentThing){
+			CommentThing inputThing = (CommentThing) thing;
+			this.setName(inputThing.getName());
+			this.setDescription(inputThing.getDescription());
+		}
+		else{
+			throw new IllegalArgumentException("Input is not a instance of CommentThing");
+		}
+	}
 
 	public String getSentBy() {
 		return sentBy;

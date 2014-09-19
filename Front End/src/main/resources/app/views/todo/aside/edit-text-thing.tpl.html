@@ -1,14 +1,24 @@
-<div class="aside" tabindex="-1" role="dialog">
-    <div class="aside-dialog">
-        <div class="aside-content">
-            <div class="aside-header" ng-show="title">
-                <button type="button" class="close" ng-click="$hide()">&times;</button>
-                <h4 class="aside-title" ng-bind="title"></h4>
-            </div>
-            <div class="aside-body" ng-bind="content"></div>
-            <div class="aside-footer">
-                <button type="button" class="btn btn-default" ng-click="$hide()">Close</button>
-            </div>
-        </div>
-    </div>
+<div class="aside col-md-6" tabindex="-1" role="dialog">
+	<div class="aside-dialog">
+		<div class="aside-content">
+			<div class="aside-header">
+				<h4 class="aside-title">Edit thing</h4>
+			</div>
+			<div class="aside-body">
+				<div class="form-group">
+					<label>Name</label>
+					<input class="form-control" ng-model="thing.name" >
+				</div>
+				<div class="form-group">
+					<div class="form-group">
+			            <text-angular ng-model="thing.description" ta-toolbar="[['h4','p','pre','quote'],['bold','italics', 'underline'],['ul','ol'],['justifyLeft','justifyCenter','justifyRight'],['html']]"></text-angular>
+			        </div>
+				</div>
+			</div>
+			<div class="aside-footer">
+				<button type="button" class="btn btn-default" ng-click="$hide()">Close</button>
+				<button type="button" class="btn btn-default" ng-click="save(thing); $hide()">Save</button>
+			</div>
+		</div>
+	</div>
 </div>
