@@ -2,8 +2,8 @@
 	<h3><a ng-href="{{thing.link}}" target="_blank">{{thing.name}}</a></h3>
 	<p ng-bind-html="thing.description"></p>
 	<p>
-	    <span class="label label-info"><i class="fa fa-pencil"></i> Edit</span>
-	    <span class="label label-info"><i class="fa fa-trash"></i> Delete</span>
+        <a href data-template="views/todo/aside/edit-link-thing.tpl.html" data-backdrop="static" data-placement="left" data-animation="am-slide-left" bs-aside="aside" data-container="body" class="label label-info" ><i class="fa fa-pencil"></i> Edit</a>
+        <a href class="label label-info"  data-placement="top-left" bs-popover="deletePopover" data-template="views/todo/popover/delete-thing-popover.html"><i class="fa fa-trash"></i> Delete</a>
 	    <span class="label label-info"><i class="fa fa-ellipsis-h"></i></span>
 	</p>
 </div>
