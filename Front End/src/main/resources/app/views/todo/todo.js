@@ -150,33 +150,7 @@
 	        		removeFn: '&',
 	        		save: '&'
 	        	},
-	        	controller: function($scope){
-	        		
-	        		$scope.edit = function(thing){
-	        			$scope.save({thing: thing})
-	        		};
-	        		
-	        		$scope.aside =  {
-                			thing: angular.copy($scope.thing), 
-            				save: function(thing){
-            						$scope.edit(thing);
-    						}
-        			};
-	        		
-	        		$scope.deletePopover = {
-	        					title: 'Delete',
-	        					name: $scope.thing.name,
-	        					call: function(){
-	        						$scope.remove();
-	        					}
-    				};
-	        		
-	        		$scope.remove = function(){
-                        var id = $scope.thing.id;
-	        			$scope.removeFn({id: id});
-	        		}
-	        		
-        		},
+	        	controller: 'ThingDirectiveController',
 	        	templateUrl: 'views/todo/tmpl/show-text-todo.tmpl.html',
         	};
         })
@@ -184,11 +158,11 @@
         	return{
 	        	restrict: 'E',
 	        	scope: {
-	        		thing: '='
+                    thing: '=',
+                    removeFn: '&',
+                    save: '&'
 	        	},
-	        	controller: function($scope){
-	        		
-	        	},
+                controller: 'ThingDirectiveController',
 	        	templateUrl: 'views/todo/tmpl/show-file-todo.tmpl.html',
         	};
         })
@@ -196,11 +170,11 @@
         	return{
 	        	restrict: 'E',
 	        	scope: {
-	        		thing: '='
+                    thing: '=',
+                    removeFn: '&',
+                    save: '&'
 	        	},
-	        	controller: function($scope){
-	        		
-	        	},
+                controller: 'ThingDirectiveController',
 	        	templateUrl: 'views/todo/tmpl/show-comment-todo.tmpl.html',
         	};
         })
@@ -208,11 +182,11 @@
         	return{
 	        	restrict: 'E',
 	        	scope: {
-	        		thing: '='
+                    thing: '=',
+                    removeFn: '&',
+                    save: '&'
 	        	},
-	        	controller: function($scope){
-	        		
-	        	},
+                controller: 'ThingDirectiveController',
 	        	templateUrl: 'views/todo/tmpl/show-link-todo.tmpl.html',
         	};
         })

@@ -4,8 +4,8 @@
         <p ng-bind-html="thing.comment"></p> <small>- {{thing.sentBy}} | {{thing.created | date: 'yyyy-MM-dd HH:mm'}}</small>
     </h5>
     <p>
-        <span class="label label-info"><i class="fa fa-pencil"></i> Edit</span>
-        <span class="label label-info"><i class="fa fa-trash"></i> Delete</span>
+        <a href data-template="views/todo/aside/edit-comment-thing.tpl.html" data-backdrop="static" data-placement="left" data-animation="am-slide-left" bs-aside="aside" data-container="body" class="label label-info" ><i class="fa fa-pencil"></i> Edit</a>
+        <a href class="label label-info"  data-placement="top-left" bs-popover="deletePopover" data-template="views/todo/popover/delete-thing-popover.html"><i class="fa fa-trash"></i> Delete</a>
         <span class="label label-info"><i class="fa fa-ellipsis-h"></i></span>
     </p>
 </div>
