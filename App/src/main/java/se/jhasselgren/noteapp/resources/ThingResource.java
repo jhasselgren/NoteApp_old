@@ -107,10 +107,13 @@ public class ThingResource {
     	currentThing.update(thing);
     	
     	thingDAO.create(currentThing);
-    	
-    	Thing parent = currentThing.getParent();
-    	
-    	return Response.ok(parent).build();
+
+        if(currentThing.getParent() != null){
+            return Response.ok(currentThing.getParent()).build();
+        }
+        else{
+            return Response.ok(currentThing).build();
+        }
     }
 	    
 

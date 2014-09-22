@@ -1,5 +1,6 @@
-<div class="row" data-ng-repeat="thing in listCtrl.list" ng-click="listCtrl.rowClick(thing.id)">
-	<h3>{{ thing.name }}</h3>
-	<p>{{ thing.description }}</p>
+<div class="container">
+    <div class="row" data-ng-repeat="thing in listCtrl.list" ng-click="listCtrl.rowClick(thing.id)">
+        <h3>{{ thing.name }}</h3>
+        <p>{{ thing.description }}</p>
+    </div>
 </div>
-

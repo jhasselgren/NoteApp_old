@@ -33,8 +33,6 @@
 
         	};
         	
-        	
-        	
         	$scope.save = function(thing){
         		dataService.saveThing(thing);
         	};
@@ -42,7 +40,7 @@
             var updateCurrentThing = function(){
                 $scope.currentTing = dataService.getCurrentThing();
             };
-            
+
             $scope.deleteThing = function(id){
             	dataService.deleteThing(id);
             }
@@ -84,7 +82,6 @@
                 templateUrl: 'views/todo/tmpl/list-todo.tmpl.html',
                 controller: function($scope, dataService, $log){
                     this.list = {};
-                  
 
                     dataService.loadListOfThings().success(angular.bind(this, function(data){
                         this.list = data;
@@ -136,7 +133,18 @@
         			this.logName = function(){
                 		$log.info(this.thing);
                 	};
-        			
+
+                    var copyFunction = function(){
+                        var copy = angular.copy($scope.thing);
+                        return copy;
+                    }
+
+                    this.aside =  {
+                        thing: copyFunction(),
+                        save: function(thing){
+                            this.edit.save(thing);
+                        }
+                    };
         		},
         		controllerAs: 'todoCtrl'
         	}
