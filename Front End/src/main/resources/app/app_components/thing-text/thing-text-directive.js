@@ -72,7 +72,7 @@
                     cancelFn: '&?'
                 },
                 controller: function($scope){
-                    function init(){
+                    var init = function(){
                         $scope.thing = {
                             type: 'TEXT'
                         };
