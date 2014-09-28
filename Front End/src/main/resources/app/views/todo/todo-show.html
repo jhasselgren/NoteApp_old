@@ -1,3 +1,31 @@
-<div>
-    <show-todo thing="currentTing" save="save(thing)" remove-fn="deleteThing(id)"></show-todo>
+<div class="jumbotron">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <h1 id="1"><i class="fa fa-square-o"></i> {{currentTing.name}}</h1>
+                <p ng-bind-html="currentTing.description"><p>
+                <div class="progress">
+                    <div class="progress-bar" role="progressbar" aria-valuenow="{{currentTing.status}}" aria-valuemin="0" aria-valuemax="100" ng-style="{'width': progress}">
+                        <span class="sr-only">{{currentTing.status}}% Complete</span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <button class="btn btn-default btn-lg" data-template="views/todo/aside/edit-todo-thing.tpl.html" data-backdrop="static" data-placement="left" data-animation="am-slide-left" bs-aside="aside()" data-container="body" >Edit</button>
+                    <button class="btn btn-default btn-lg" ng-click="showCreateThing()">New thing</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div class="row" ng-show="isCreateThingMode()">
+        <create-text-thing save-fn="create(thing)" cancel-fn="cancelCreateThing()"></create-text-thing>
+    </div>
+    <div ng-repeat="child in currentTing.things | orderBy:child.id" class="row">
+        <show-text-thing thing="child" remove-fn="deleteThing(id)" save-fn="save(thing)" ng-if="child.type=='TEXT'"></show-text-thing>
+        <comment-thing thing="child" remove-fn="deleteThing(id)" save="save(thing)" ng-if="child.type == 'COMMENT'"></comment-thing>
+        <file-thing thing="child" remove-fn="deleteThing(id)" save="save(thing)" ng-if="child.type == 'FILE'"></file-thing>
+        <link-thing thing="child" remove-fn="deleteThing(id)" save="save(thing)" ng-if="child.type == 'LINK'"></link-thing>
+        <text-thing thing="child" remove-fn="deleteThing(id)" save="save(thing)" ng-if="child.type=='TEXT'"></text-thing>
+    </div>
 </div>

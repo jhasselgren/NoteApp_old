@@ -26,26 +26,68 @@
             }
         })
         .controller('TodoShowController', function($scope, $log, $location, dataService, $routeParams, $aside){
-            var init = function(){
-                var thingId = $routeParams.thingId;
-                dataService.registerObserverCallback(updateCurrentThing);
-	    		dataService.setCurrentThing(thingId);
 
-        	};
+                var isCreateThingMode = false;
+
+                var init = function(){
+                    var thingId = $routeParams.thingId;
+                    dataService.registerObserverCallback(updateCurrentThing);
+                    dataService.setCurrentThing(thingId);
+                };
+
+                $scope.showCreateThing = function(){
+                    isCreateThingMode = true;
+                };
+
+                $scope.isCreateThingMode = function(){
+                    return isCreateThingMode;
+                }
+
+                $scope.cancelCreateThing = function(){
+                    isCreateThingMode = false;
+                }
         	
-        	$scope.save = function(thing){
-        		dataService.saveThing(thing);
-        	};
-        	
-            var updateCurrentThing = function(){
-                $scope.currentTing = dataService.getCurrentThing();
-            };
+                $scope.save = function(thing){
+                    dataService.saveThing(thing);
+                };
 
-            $scope.deleteThing = function(id){
-            	dataService.deleteThing(id);
-            }
+                var updateCurrentThing = function(){
+                    $scope.currentTing = dataService.getCurrentThing();
+                };
 
-        	init();
+                $scope.deleteThing = function(id){
+                    dataService.deleteThing(id);
+                };
+
+                $scope.create =function(thing){
+                    dataService.addChild(thing).then(function(data){
+
+                    }, function(error){
+                        $log.error(error);
+                    });
+                };
+
+                $scope.aside =  function(){
+                    return{
+                        thing: angular.copy($scope.currentTing),
+                        save: function(thing){
+                            $scope.save(thing);
+                        }
+                    }
+                };
+
+                if(typeof $scope.currentTing != "undefined"){
+                    $scope.progress = $scope.currentTing.status + '%';
+                };
+
+                $scope.$watch('currentTing', function(newVal, oldVal){
+                    if(typeof $scope.currentTing != "undefined"){
+                        $scope.progress = $scope.currentTing.status + '%';
+                    }
+
+                });
+
+                init();
 
         })
         .controller('ThingDirectiveController', function($scope){
@@ -108,14 +150,14 @@
         		},
         		templateUrl: 'views/todo/tmpl/show-todo.tmpl.html',
         		controller: function($scope, $log){
-        			
         			$scope.$watch('thing', angular.bind(this, function(newVal, oldVal){
         				this.thing = $scope.thing
         				if(typeof this.thing != "undefined"){
             				this.progress = this.thing.status + '%';
             			}
+
         			}));
-        			
+
         			this.edit = function(thing){
         				$scope.save({thing: thing});
         			};
@@ -150,6 +192,7 @@
         	}
         	
         })
+            /*
         .directive('textThing', function(){
         	return{
 	        	restrict: 'E',
@@ -198,5 +241,6 @@
 	        	templateUrl: 'views/todo/tmpl/show-link-todo.tmpl.html',
         	};
         })
+        */
     ;
 })();

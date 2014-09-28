@@ -11,7 +11,7 @@
                     </div>
                     <div class="form-group">
                         <button class="btn btn-default btn-lg" data-template="views/todo/aside/edit-todo-thing.tpl.html" data-backdrop="static" data-placement="left" data-animation="am-slide-left" bs-aside="todoCtrl.aside" data-container="body" >Edit</button>
-                        <button class="btn btn-default btn-lg">New thing</button>
+                        <button class="btn btn-default btn-lg" ng-click="creatThing=true">New thing</button>
                     </div>
                 </div>
             </div>
@@ -19,9 +19,12 @@
 </div>
 <div class="container">
     <div ng-repeat="child in todoCtrl.thing.things | orderBy:child.id" class="row">
+        <show-text-thing thing="child" remove-fn="todoCtrl.removeThing(id)" save-fn="todoCtrl.edit(thing)" ng-if="child.type=='TEXT'"></show-text-thing>
+        <!--
         <comment-thing thing="child" remove-fn="todoCtrl.removeThing(id)" save="todoCtrl.edit(thing)" ng-if="child.type == 'COMMENT'"></comment-thing>
         <file-thing thing="child" remove-fn="todoCtrl.removeThing(id)" save="todoCtrl.edit(thing)" ng-if="child.type == 'FILE'"></file-thing>
         <link-thing thing="child" remove-fn="todoCtrl.removeThing(id)" save="todoCtrl.edit(thing)" ng-if="child.type == 'LINK'"></link-thing>
         <text-thing thing="child" remove-fn="todoCtrl.removeThing(id)" save="todoCtrl.edit(thing)" ng-if="child.type=='TEXT'"></text-thing>
+        -->
     </div>
 </div>
