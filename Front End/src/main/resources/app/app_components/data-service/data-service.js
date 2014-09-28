@@ -51,6 +51,16 @@
                 			currentThing = data;
                 			notifyObservers();
                 		});
+                },
+                addChild: function(thing){
+                    var promise = $http.put('api/thing/' + currentThing.id + '/add', thing);
+
+                    promise.success(function(data){
+                       currentThing = data;
+                        notifyObservers();
+                    });
+
+                    return promise;
                 }
             };
 

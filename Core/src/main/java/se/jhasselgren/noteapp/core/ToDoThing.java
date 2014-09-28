@@ -3,11 +3,7 @@ package se.jhasselgren.noteapp.core;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonTypeName;
 
@@ -21,6 +17,7 @@ public class ToDoThing extends Thing {
 	private Thing result;
 	
 	@OneToMany(mappedBy = "parent", cascade = CascadeType.ALL, fetch=FetchType.EAGER)
+    @OrderBy("id ASC")
     private Set<Thing> things = new HashSet<Thing>();
 	
 	public ToDoThing() {
@@ -34,6 +31,7 @@ public class ToDoThing extends Thing {
 			ToDoThing inputThing = (ToDoThing) thing;
 			this.setName(inputThing.getName());
 			this.setDescription(inputThing.getDescription());
+            this.setStatus((inputThing.getStatus()));
 		}
 		else{
 			throw new IllegalArgumentException("Input is not a instance of ToDoThing");

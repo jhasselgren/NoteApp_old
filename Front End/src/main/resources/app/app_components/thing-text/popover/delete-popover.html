@@ -1,0 +1,12 @@
+<div class="popover col-xs-8 col-sm-4">
+	<div class="arrow"></div>
+	<h3 class="popover-title" ng-bind="title" ng-show="title"></h3>
+	<div class="popover-content">
+		<p>Are you sure that you want to delete: <br>
+            <strong>{{name}}</strong></p>
+		<div class="form-actions">
+            <a href class="label label-danger" ng-click="call();$hide()">Delete</a>
+            <a href class="label label-info" ng-click="$hide()">Close</a>
+		</div>
+	</div>
+</div>

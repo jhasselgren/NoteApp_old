@@ -23,6 +23,7 @@ database:
 
   properties:
     hibernate.hbm2ddl.auto: create-drop
+    hibernate.show_sql: true
 
 logging:
   level: INFO

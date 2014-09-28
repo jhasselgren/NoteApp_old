@@ -1,0 +1,143 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<style>
+body { background-color: #eeeeee; padding: 0; margin: 5px; overflow-y: scroll; }
+#HTMLReporter { font-size: 11px; font-family: Monaco, "Lucida Console", monospace; line-height: 14px; color: #333333; }
+#HTMLReporter a { text-decoration: none; }
+#HTMLReporter a:hover { text-decoration: underline; }
+#HTMLReporter p, #HTMLReporter h1, #HTMLReporter h2, #HTMLReporter h3, #HTMLReporter h4, #HTMLReporter h5, #HTMLReporter h6 { margin: 0; line-height: 14px; }
+#HTMLReporter .banner, #HTMLReporter .symbolSummary, #HTMLReporter .summary, #HTMLReporter .resultMessage, #HTMLReporter .specDetail .description, #HTMLReporter .alert .bar, #HTMLReporter .stackTrace { padding-left: 9px; padding-right: 9px; }
+#HTMLReporter #jasmine_content { position: fixed; right: 100%; }
+#HTMLReporter .version { color: #aaaaaa; }
+#HTMLReporter .banner { margin-top: 14px; }
+#HTMLReporter .duration { color: #aaaaaa; float: right; }
+#HTMLReporter .exceptions { color: #fff; float: right; margin-top: 5px; margin-right: 5px; }
+#HTMLReporter .bar { line-height: 28px; font-size: 14px; display: block; color: #eee; }
+#HTMLReporter .runningAlert { background-color: #666666; }
+#HTMLReporter .skippedAlert { background-color: #aaaaaa; }
+#HTMLReporter .skippedAlert:first-child { background-color: #333333; }
+#HTMLReporter .skippedAlert:hover { text-decoration: none; color: white; text-decoration: underline; }
+#HTMLReporter .passingAlert { background-color: #a6b779; }
+#HTMLReporter .passingAlert:first-child { background-color: #5e7d00; }
+#HTMLReporter .failingAlert { background-color: #cf867e; }
+#HTMLReporter .failingAlert:first-child { background-color: #b03911; }
+#HTMLReporter .results { margin-top: 14px; }
+#HTMLReporter #details { display: none; }
+#HTMLReporter .resultsMenu, #HTMLReporter .resultsMenu a { background-color: #fff; color: #333333; }
+#HTMLReporter.showDetails .summaryMenuItem { font-weight: normal; text-decoration: inherit; }
+#HTMLReporter.showDetails .summaryMenuItem:hover { text-decoration: underline; }
+#HTMLReporter.showDetails .detailsMenuItem { font-weight: bold; text-decoration: underline; }
+#HTMLReporter.showDetails .summary { display: none; }
+#HTMLReporter.showDetails #details { display: block; }
+#HTMLReporter .summaryMenuItem { font-weight: bold; text-decoration: underline; }
+#HTMLReporter .summary { margin-top: 14px; }
+#HTMLReporter .summary .suite .suite, #HTMLReporter .summary .specSummary { margin-left: 14px; }
+#HTMLReporter .summary .specSummary.passed span { color: #5e7d00; }
+#HTMLReporter .summary .specSummary.failed span { color: #b03911; }
+#HTMLReporter .description + .suite { margin-top: 0; }
+#HTMLReporter .suite { margin-top: 14px; }
+#HTMLReporter .suite a { color: #333333; }
+#HTMLReporter #details .specDetail { margin-bottom: 28px; }
+#HTMLReporter #details .specDetail .description { display: block; color: white; background-color: #b03911; }
+#HTMLReporter .resultMessage { padding-top: 14px; color: #333333; }
+#HTMLReporter .resultMessage span.result { display: block; }
+#HTMLReporter .stackTrace { margin: 5px 0 0 0; max-height: 224px; overflow: auto; line-height: 18px; color: #666666; border: 1px solid #ddd; background: white; white-space: pre; }
+</style>
+ <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+ <script>
+ 	$(function(){
+		$("a.summaryMenuItem").on("click", function(){
+			$("body").removeClass("showDetails").addClass("showSummary");
+		});
+		$("a.detailsMenuItem").on("click", function(){
+			$("body").addClass("showDetails").removeClass("showSummary");
+		});
+
+	});
+ </script>
+</head>
+
+<body id="HTMLReporter" class="html-reporter showDetails">
+<h1>PhantomJS 1.9.7 (Mac OS X)</h1>
+
+<div class="alert">
+
+
+<span class="failingAlert bar">Failed 1 specs</span>
+<span class="resultsMenu bar">
+<a class="summaryMenuItem" href="#">2 specs<a>|<a class="detailsMenuItem" href="#">1 failing</a>
+</span>
+
+
+
+</div>
+<div class="results">
+	<div class="summary">
+
+
+	
+		<div class="suite passed">
+			<span class="description">Check that test working</span>
+		
+			<div class="specSummary passed">
+			<span class="description">true should br true</span>
+			</div>
+		
+		</div>
+	
+		<div class="suite failed">
+			<span class="description">Testing show-text-thing direcive</span>
+		
+			<div class="specSummary failed">
+			<span class="description">ensure that todo thing name is shown</span>
+			</div>
+		
+		</div>
+	
+</div>
+
+<div id="details">
+	
+	
+	<div class="specDetail failed">
+		<span class="description">Testing show-text-thing direcive ensure that todo thing name is shown</span>
+		<div class="stackTrace">
+			<div class="resultMessage">Error: [$injector:modulerr] Failed to instantiate module /app_components/thing-text/show-text.tpl.html due to:
+Error: [$injector:nomod] Module '/app_components/thing-text/show-text.tpl.html' is not available! You either misspelled the module name or forgot to load it. If registering a module ensure that you specify the dependencies as the second argument.
+http://errors.angularjs.org/1.2.24/$injector/nomod?p0=%2Fapp_components%2Fthing-text%2Fshow-text.tpl.html
+    at http://localhost:9877/base/bower_components/angular/angular.js?ba275f9d38b8af9cf844e618f3ce98f151093757:1679
+    at ensure (http://localhost:9877/base/bower_components/angular/angular.js?ba275f9d38b8af9cf844e618f3ce98f151093757:1601)
+    at module (http://localhost:9877/base/bower_components/angular/angular.js?ba275f9d38b8af9cf844e618f3ce98f151093757:1892)
+    at http://localhost:9877/base/bower_components/angular/angular.js?ba275f9d38b8af9cf844e618f3ce98f151093757:3878
+    at forEach (http://localhost:9877/base/bower_components/angular/angular.js?ba275f9d38b8af9cf844e618f3ce98f151093757:325)
+    at loadModules (http://localhost:9877/base/bower_components/angular/angular.js?ba275f9d38b8af9cf844e618f3ce98f151093757:3909)
+    at createInjector (http://localhost:9877/base/bower_components/angular/angular.js?ba275f9d38b8af9cf844e618f3ce98f151093757:3812)
+    at workFn (http://localhost:9877/base/bower_components/angular-mocks/angular-mocks.js?e0aa095c6dc8275adf740aebb0bb115cc81dfd2c:2156)
+    at http://localhost:9877/absolute/Users/jhas/Development/Projects/NoteApp/Front%20End/src/main/resources/node_modules/karma-jasmine/lib/boot.js?a673f666b22b904e87980aab4f31696488a5a2bd:117
+    at http://localhost:9877/absolute/Users/jhas/Development/Projects/NoteApp/Front%20End/src/main/resources/node_modules/karma-jasmine/lib/adapter.js?7ee59a2c0ba91fffef258ef34e4953cc4ca2a6c0:171
+    at http://localhost:9877/karma.js:189
+    at http://localhost:9877/context.html:85
+http://errors.angularjs.org/1.2.24/$injector/modulerr?p0=%2Fapp_components%2Fthing-text%2Fshow-text.tpl.html&amp;p1=Error%3A%20%5B%24injector%3Anomod%5D%20Module%20'%2Fapp_components%2Fthing-text%2Fshow-text.tpl.html'%20is%20not%20available!%20You%20either%20misspelled%20the%20module%20name%20or%20forgot%20to%20load%20it.%20If%20registering%20a%20module%20ensure%20that%20you%20specify%20the%20dependencies%20as%20the%20second%20argument.%0Ahttp%3A%2F%2Ferrors.angularjs.org%2F1.2.24%2F%24injector%2Fnomod%3Fp0%3D%252Fapp_components%252Fthing-text%252Fshow-text.tpl.html%0A%20%20%20%20at%20http%3A%2F%2Flocalhost%3A9877%2Fbase%2Fbower_components%2Fangular%2Fangular.js%3Fba275f9d38b8af9cf844e618f3ce98f151093757%3A1679%0A%20%20%20%20at%20ensure%20(http%3A%2F%2Flocalhost%3A9877%2Fbase%2Fbower_components%2Fangular%2Fangular.js%3Fba275f9d38b8af9cf844e618f3ce98f151093757%3A1601)%0A%20%20%20%20at%20module%20(http%3A%2F%2Flocalhost%3A9877%2Fbase%2Fbower_components%2Fangular%2Fangular.js%3Fba275f9d38b8af9cf844e618f3ce98f151093757%3A1892)%0A%20%20%20%20at%20http%3A%2F%2Flocalhost%3A9877%2Fbase%2Fbower_components%2Fangular%2Fangular.js%3Fba275f9d38b8af9cf844e618f3ce98f151093757%3A3878%0A%20%20%20%20at%20forEach%20(http%3A%2F%2Flocalhost%3A9877%2Fbase%2Fbower_components%2Fangular%2Fangular.js%3Fba275f9d38b8af9cf844e618f3ce98f151093757%3A325)%0A%20%20%20%20at%20loadModules%20(http%3A%2F%2Flocalhost%3A9877%2Fbase%2Fbower_components%2Fangular%2Fangular.js%3Fba275f9d38b8af9cf844e618f3ce98f151093757%3A3909)%0A%20%20%20%20at%20createInjector%20(http%3A%2F%2Flocalhost%3A9877%2Fbase%2Fbower_components%2Fangular%2Fangular.js%3Fba275f9d38b8af9cf844e618f3ce98f151093757%3A3812)%0A%20%20%20%20at%20workFn%20(http%3A%2F%2Flocalhost%3A9877%2Fbase%2Fbower_components%2Fangular-mocks%2Fangular-mocks.js%3Fe0aa095c6dc8275adf740aebb0bb115cc81dfd2c%3A2156)%0A%20%20%20%20at%20attemptSync%20(http%3A%2F%2Flocalhost%3A9877%2Fabsolute%2FUsers%2Fjhas%2FDevelopment%2FProjects%2FNoteApp%2FFront%2520End%2Fsrc%2Fmain%2Fresources%2Fnode_modules%2Fkarma-jasmine%2Flib%2Fjasmine.js%3Fdc3780c73c9598d515a7f1911078142f3f4b029e%3A1510)%0A%20%20%20%20at%20http%3A%2F%2Flocalhost%3A9877%2Fabsolute%2FUsers%2Fjhas%2FDevelopment%2FProjects%2FNoteApp%2FFront%2520End%2Fsrc%2Fmain%2Fresources%2Fnode_modules%2Fkarma-jasmine%2Flib%2Fjasmine.js%3Fdc3780c73c9598d515a7f1911078142f3f4b029e%3A1498%0A%20%20%20%20at%20http%3A%2F%2Flocalhost%3A9877%2Fabsolute%2FUsers%2Fjhas%2FDevelopment%2FProjects%2FNoteApp%2FFront%2520End%2Fsrc%2Fmain%2Fresources%2Fnode_modules%2Fkarma-jasmine%2Flib%2Fjasmine.js%3Fdc3780c73c9598d515a7f1911078142f3f4b029e%3A1485%0A%20%20%20%20at%20http%3A%2F%2Flocalhost%3A9877%2Fabsolute%2FUsers%2Fjhas%2FDevelopment%2FProjects%2FNoteApp%2FFront%2520End%2Fsrc%2Fmain%2Fresources%2Fnode_modules%2Fkarma-jasmine%2Flib%2Fjasmine.js%3Fdc3780c73c9598d515a7f1911078142f3f4b029e%3A518%0A%20%20%20%20at%20http%3A%2F%2Flocalhost%3A9877%2Fabsolute%2FUsers%2Fjhas%2FDevelopment%2FProjects%2FNoteApp%2FFront%2520End%2Fsrc%2Fmain%2Fresources%2Fnode_modules%2Fkarma-jasmine%2Flib%2Fjasmine.js%3Fdc3780c73c9598d515a7f1911078142f3f4b029e%3A309%0A%20%20%20%20at%20http%3A%2F%2Flocalhost%3A9877%2Fabsolute%2FUsers%2Fjhas%2FDevelopment%2FProjects%2FNoteApp%2FFront%2520End%2Fsrc%2Fmain%2Fresources%2Fnode_modules%2Fkarma-jasmine%2Flib%2Fjasmine.js%3Fdc3780c73c9598d515a7f1911078142f3f4b029e%3A1708%0A%20%20%20%20at%20attemptAsync%20(http%3A%2F%2Flocalhost%3A9877%2Fabsolute%2FUsers%2Fjhas%2FDevelopment%2FProjects%2FNoteApp%2FFront%2520End%2Fsrc%2Fmain%2Fresources%2Fnode_modules%2Fkarma-jasmine%2Flib%2Fjasmine.js%3Fdc3780c73c9598d515a7f1911078142f3f4b029e%3A1520)%0A%20%20%20%20at%20http%3A%2F%2Flocalhost%3A9877%2Fabsolute%2FUsers%2Fjhas%2FDevelopment%2FProjects%2FNoteApp%2FFront%2520End%2Fsrc%2Fmain%2Fresources%2Fnode_modules%2Fkarma-jasmine%2Flib%2Fjasmine.js%3Fdc3780c73c9598d515a7f1911078142f3f4b029e%3A1496%0A%20%20%20%20at%20http%3A%2F%2Flocalhost%3A9877%2Fabsolute%2FUsers%2Fjhas%2FDevelopment%2FProjects%2FNoteApp%2FFront%2520End%2Fsrc%2Fmain%2Fresources%2Fnode_modules%2Fkarma-jasmine%2Flib%2Fjasmine.js%3Fdc3780c73c9598d515a7f1911078142f3f4b029e%3A1485%0A%20%20%20%20at%20http%3A%2F%2Flocalhost%3A9877%2Fabsolute%2FUsers%2Fjhas%2FDevelopment%2FProjects%2FNoteApp%2FFront%2520End%2Fsrc%2Fmain%2Fresources%2Fnode_modules%2Fkarma-jasmine%2Flib%2Fjasmine.js%3Fdc3780c73c9598d515a7f1911078142f3f4b029e%3A518%0A%20%20%20%20at%20http%3A%2F%2Flocalhost%3A9877%2Fabsolute%2FUsers%2Fjhas%2FDevelopment%2FProjects%2FNoteApp%2FFront%2520End%2Fsrc%2Fmain%2Fresources%2Fnode_modules%2Fkarma-jasmine%2Flib%2Fjasmine.js%3Fdc3780c73c9598d515a7f1911078142f3f4b029e%3A1696%0A%20%20%20%20at%20http%3A%2F%2Flocalhost%3A9877%2Fabsolute%2FUsers%2Fjhas%2FDevelopment%2FProjects%2FNoteApp%2FFront%2520End%2Fsrc%2Fmain%2Fresources%2Fnode_modules%2Fkarma-jasmine%2Flib%2Fjasmine.js%3Fdc3780c73c9598d515a7f1911078142f3f4b029e%3A1708%0A%20%20%20%20at%20attemptAsync%20(http%3A%2F%2Flocalhost%3A9877%2Fabsolute%2FUsers%2Fjhas%2FDevelopment%2FProjects%2FNoteApp%2FFront%2520End%2Fsrc%2Fmain%2Fresources%2Fnode_modules%2Fkarma-jasmine%2Flib%2Fjasmine.js%3Fdc3780c73c9598d515a7f1911078142f3f4b029e%3A1520)%0A%20%20%20%20at%20http%3A%2F%2Flocalhost%3A9877%2Fabsolute%2FUsers%2Fjhas%2FDevelopment%2FProjects%2FNoteApp%2FFront%2520End%2Fsrc%2Fmain%2Fresources%2Fnode_modules%2Fkarma-jasmine%2Flib%2Fjasmine.js%3Fdc3780c73c9598d515a7f1911078142f3f4b029e%3A1496%0A%20%20%20%20at%20http%3A%2F%2Flocalhost%3A9877%2Fabsolute%2FUsers%2Fjhas%2FDevelopment%2FProjects%2FNoteApp%2FFront%2520End%2Fsrc%2Fmain%2Fresources%2Fnode_modules%2Fkarma-jasmine%2Flib%2Fjasmine.js%3Fdc3780c73c9598d515a7f1911078142f3f4b029e%3A1517%0A%20%20%20%20at%20complete%20(http%3A%2F%2Flocalhost%3A9877%2Fabsolute%2FUsers%2Fjhas%2FDevelopment%2FProjects%2FNoteApp%2FFront%2520End%2Fsrc%2Fmain%2Fresources%2Fnode_modules%2Fkarma-jasmine%2Flib%2Fjasmine.js%3Fdc3780c73c9598d515a7f1911078142f3f4b029e%3A1703)%0A%20%20%20%20at%20clearStack%20(http%3A%2F%2Flocalhost%3A9877%2Fabsolute%2FUsers%2Fjhas%2FDevelopment%2FProjects%2FNoteApp%2FFront%2520End%2Fsrc%2Fmain%2Fresources%2Fnode_modules%2Fkarma-jasmine%2Flib%2Fjasmine.js%3Fdc3780c73c9598d515a7f1911078142f3f4b029e%3A506)%0A%20%20%20%20at%20http%3A%2F%2Flocalhost%3A9877%2Fabsolute%2FUsers%2Fjhas%2FDevelopment%2FProjects%2FNoteApp%2FFront%2520End%2Fsrc%2Fmain%2Fresources%2Fnode_modules%2Fkarma-jasmine%2Flib%2Fjasmine.js%3Fdc3780c73c9598d515a7f1911078142f3f4b029e%3A1505%0A%20%20%20%20at%20http%3A%2F%2Flocalhost%3A9877%2Fabsolute%2FUsers%2Fjhas%2FDevelopment%2FProjects%2FNoteApp%2FFront%2520End%2Fsrc%2Fmain%2Fresources%2Fnode_modules%2Fkarma-jasmine%2Flib%2Fjasmine.js%3Fdc3780c73c9598d515a7f1911078142f3f4b029e%3A1517%0A%20%20%20%20at%20complete%20(http%3A%2F%2Flocalhost%3A9877%2Fabsolute%2FUsers%2Fjhas%2FDevelopment%2FProjects%2FNoteApp%2FFront%2520End%2Fsrc%2Fmain%2Fresources%2Fnode_modules%2Fkarma-jasmine%2Flib%2Fjasmine.js%3Fdc3780c73c9598d515a7f1911078142f3f4b029e%3A333)%0A%20%20%20%20at%20clearStack%20(http%3A%2F%2Flocalhost%3A9877%2Fabsolute%2FUsers%2Fjhas%2FDevelopment%2FProjects%2FNoteApp%2FFront%2520End%2Fsrc%2Fmain%2Fresources%2Fnode_modules%2Fkarma-jasmine%2Flib%2Fjasmine.js%3Fdc3780c73c9598d515a7f1911078142f3f4b029e%3A506)%0A%20%20%20%20at%20http%3A%2F%2Flocalhost%3A9877%2Fabsolute%2FUsers%2Fjhas%2FDevelopment%2FProjects%2FNoteApp%2FFront%2520End%2Fsrc%2Fmain%2Fresources%2Fnode_modules%2Fkarma-jasmine%2Flib%2Fjasmine.js%3Fdc3780c73c9598d515a7f1911078142f3f4b029e%3A1505%0A%20%20%20%20at%20http%3A%2F%2Flocalhost%3A9877%2Fabsolute%2FUsers%2Fjhas%2FDevelopment%2FProjects%2FNoteApp%2FFront%2520End%2Fsrc%2Fmain%2Fresources%2Fnode_modules%2Fkarma-jasmine%2Flib%2Fjasmine.js%3Fdc3780c73c9598d515a7f1911078142f3f4b029e%3A1485%0A%20%20%20%20at%20http%3A%2F%2Flocalhost%3A9877%2Fabsolute%2FUsers%2Fjhas%2FDevelopment%2FProjects%2FNoteApp%2FFront%2520End%2Fsrc%2Fmain%2Fresources%2Fnode_modules%2Fkarma-jasmine%2Flib%2Fjasmine.js%3Fdc3780c73c9598d515a7f1911078142f3f4b029e%3A518%0A%20%20%20%20at%20http%3A%2F%2Flocalhost%3A9877%2Fabsolute%2FUsers%2Fjhas%2FDevelopment%2FProjects%2FNoteApp%2FFront%2520End%2Fsrc%2Fmain%2Fresources%2Fnode_modules%2Fkarma-jasmine%2Flib%2Fjasmine.js%3Fdc3780c73c9598d515a7f1911078142f3f4b029e%3A309%0A%20%20%20%20at%20http%3A%2F%2Flocalhost%3A9877%2Fabsolute%2FUsers%2Fjhas%2FDevelopment%2FProjects%2FNoteApp%2FFront%2520End%2Fsrc%2Fmain%2Fresources%2Fnode_modules%2Fkarma-jasmine%2Flib%2Fjasmine.js%3Fdc3780c73c9598d515a7f1911078142f3f4b029e%3A1708%0A%20%20%20%20at%20attemptAsync%20(http%3A%2F%2Flocalhost%3A9877%2Fabsolute%2FUsers%2Fjhas%2FDevelopment%2FProjects%2FNoteApp%2FFront%2520End%2Fsrc%2Fmain%2Fresources%2Fnode_modules%2Fkarma-jasmine%2Flib%2Fjasmine.js%3Fdc3780c73c9598d515a7f1911078142f3f4b029e%3A1520)%0A%20%20%20%20at%20http%3A%2F%2Flocalhost%3A9877%2Fabsolute%2FUsers%2Fjhas%2FDevelopment%2FProjects%2FNoteApp%2FFront%2520End%2Fsrc%2Fmain%2Fresources%2Fnode_modules%2Fkarma-jasmine%2Flib%2Fjasmine.js%3Fdc3780c73c9598d515a7f1911078142f3f4b029e%3A1496%0A%20%20%20%20at%20http%3A%2F%2Flocalhost%3A9877%2Fabsolute%2FUsers%2Fjhas%2FDevelopment%2FProjects%2FNoteApp%2FFront%2520End%2Fsrc%2Fmain%2Fresources%2Fnode_modules%2Fkarma-jasmine%2Flib%2Fjasmine.js%3Fdc3780c73c9598d515a7f1911078142f3f4b029e%3A1485%0A%20%20%20%20at%20http%3A%2F%2Flocalhost%3A9877%2Fabsolute%2FUsers%2Fjhas%2FDevelopment%2FProjects%2FNoteApp%2FFront%2520End%2Fsrc%2Fmain%2Fresources%2Fnode_modules%2Fkarma-jasmine%2Flib%2Fjasmine.js%3Fdc3780c73c9598d515a7f1911078142f3f4b029e%3A518%0A%20%20%20%20at%20http%3A%2F%2Flocalhost%3A9877%2Fabsolute%2FUsers%2Fjhas%2FDevelopment%2FProjects%2FNoteApp%2FFront%2520End%2Fsrc%2Fmain%2Fresources%2Fnode_modules%2Fkarma-jasmine%2Flib%2Fjasmine.js%3Fdc3780c73c9598d515a7f1911078142f3f4b029e%3A1696%0A%20%20%20%20at%20http%3A%2F%2Flocalhost%3A9877%2Fabsolute%2FUsers%2Fjhas%2FDevelopment%2FProjects%2FNoteApp%2FFront%2520End%2Fsrc%2Fmain%2Fresources%2Fnode_modules%2Fkarma-jasmine%2Flib%2Fjasmine.js%3Fdc3780c73c9598d515a7f1911078142f3f4b029e%3A1708%0A%20%20%20%20at%20attemptAsync%20(http%3A%2F%2Flocalhost%3A9877%2Fabsolute%2FUsers%2Fjhas%2FDevelopment%2FProjects%2FNoteApp%2FFront%2520End%2Fsrc%2Fmain%2Fresources%2Fnode_modules%2Fkarma-jasmine%2Flib%2Fjasmine.js%3Fdc3780c73c9598d515a7f1911078142f3f4b029e%3A1520)%0A%20%20%20%20at%20http%3A%2F%2Flocalhost%3A9877%2Fabsolute%2FUsers%2Fjhas%2FDevelopment%2FProjects%2FNoteApp%2FFront%2520End%2Fsrc%2Fmain%2Fresources%2Fnode_modules%2Fkarma-jasmine%2Flib%2Fjasmine.js%3Fdc3780c73c9598d515a7f1911078142f3f4b029e%3A1496%0A%20%20%20%20at%20http%3A%2F%2Flocalhost%3A9877%2Fabsolute%2FUsers%2Fjhas%2FDevelopment%2FProjects%2FNoteApp%2FFront%2520End%2Fsrc%2Fmain%2Fresources%2Fnode_modules%2Fkarma-jasmine%2Flib%2Fjasmine.js%3Fdc3780c73c9598d515a7f1911078142f3f4b029e%3A1485%0A%20%20%20%20at%20http%3A%2F%2Flocalhost%3A9877%2Fabsolute%2FUsers%2Fjhas%2FDevelopment%2FProjects%2FNoteApp%2FFront%2520End%2Fsrc%2Fmain%2Fresources%2Fnode_modules%2Fkarma-jasmine%2Flib%2Fjasmine.js%3Fdc3780c73c9598d515a7f1911078142f3f4b029e%3A518%0A%20%20%20%20at%20http%3A%2F%2Flocalhost%3A9877%2Fabsolute%2FUsers%2Fjhas%2FDevelopment%2FProjects%2FNoteApp%2FFront%2520End%2Fsrc%2Fmain%2Fresources%2Fnode_modules%2Fkarma-jasmine%2Flib%2Fjasmine.js%3Fdc3780c73c9598d515a7f1911078142f3f4b029e%3A1696%0A%20%20%20%20at%20http%3A%2F%2Flocalhost%3A9877%2Fabsolute%2FUsers%2Fjhas%2FDevelopment%2FProjects%2FNoteApp%2FFront%2520End%2Fsrc%2Fmain%2Fresources%2Fnode_modules%2Fkarma-jasmine%2Flib%2Fjasmine.js%3Fdc3780c73c9598d515a7f1911078142f3f4b029e%3A541%0A%20%20%20%20at%20attemptAsync%20(http%3A%2F%2Flocalhost%3A9877%2Fabsolute%2FUsers%2Fjhas%2FDevelopment%2FProjects%2FNoteApp%2FFront%2520End%2Fsrc%2Fmain%2Fresources%2Fnode_modules%2Fkarma-jasmine%2Flib%2Fjasmine.js%3Fdc3780c73c9598d515a7f1911078142f3f4b029e%3A1520)%0A%20%20%20%20at%20http%3A%2F%2Flocalhost%3A9877%2Fabsolute%2FUsers%2Fjhas%2FDevelopment%2FProjects%2FNoteApp%2FFront%2520End%2Fsrc%2Fmain%2Fresources%2Fnode_modules%2Fkarma-jasmine%2Flib%2Fjasmine.js%3Fdc3780c73c9598d515a7f1911078142f3f4b029e%3A1496%0A%20%20%20%20at%20http%3A%2F%2Flocalhost%3A9877%2Fabsolute%2FUsers%2Fjhas%2FDevelopment%2FProjects%2FNoteApp%2FFront%2520End%2Fsrc%2Fmain%2Fresources%2Fnode_modules%2Fkarma-jasmine%2Flib%2Fjasmine.js%3Fdc3780c73c9598d515a7f1911078142f3f4b029e%3A1485%0A%20%20%20%20at%20http%3A%2F%2Flocalhost%3A9877%2Fabsolute%2FUsers%2Fjhas%2FDevelopment%2FProjects%2FNoteApp%2FFront%2520End%2Fsrc%2Fmain%2Fresources%2Fnode_modules%2Fkarma-jasmine%2Flib%2Fjasmine.js%3Fdc3780c73c9598d515a7f1911078142f3f4b029e%3A518%0A%20%20%20%20at%20http%3A%2F%2Flocalhost%3A9877%2Fabsolute%2FUsers%2Fjhas%2FDevelopment%2FProjects%2FNoteApp%2FFront%2520End%2Fsrc%2Fmain%2Fresources%2Fnode_modules%2Fkarma-jasmine%2Flib%2Fjasmine.js%3Fdc3780c73c9598d515a7f1911078142f3f4b029e%3A548%0A%20%20%20%20at%20http%3A%2F%2Flocalhost%3A9877%2Fabsolute%2FUsers%2Fjhas%2FDevelopment%2FProjects%2FNoteApp%2FFront%2520End%2Fsrc%2Fmain%2Fresources%2Fnode_modules%2Fkarma-jasmine%2Flib%2Fboot.js%3Fa673f666b22b904e87980aab4f31696488a5a2bd%3A117%0A%20%20%20%20at%20http%3A%2F%2Flocalhost%3A9877%2Fabsolute%2FUsers%2Fjhas%2FDevelopment%2FProjects%2FNoteApp%2FFront%2520End%2Fsrc%2Fmain%2Fresources%2Fnode_modules%2Fkarma-jasmine%2Flib%2Fadapter.js%3F7ee59a2c0ba91fffef258ef34e4953cc4ca2a6c0%3A171%0A%20%20%20%20at%20http%3A%2F%2Flocalhost%3A9877%2Fkarma.js%3A189%0A%20%20%20%20at%20http%3A%2F%2Flocalhost%3A9877%2Fcontext.html%3A85
+    at http://localhost:9877/base/bower_components/angular/angular.js?ba275f9d38b8af9cf844e618f3ce98f151093757:3907
+    at forEach (http://localhost:9877/base/bower_components/angular/angular.js?ba275f9d38b8af9cf844e618f3ce98f151093757:325)
+    at loadModules (http://localhost:9877/base/bower_components/angular/angular.js?ba275f9d38b8af9cf844e618f3ce98f151093757:3909)
+    at createInjector (http://localhost:9877/base/bower_components/angular/angular.js?ba275f9d38b8af9cf844e618f3ce98f151093757:3812)
+    at workFn (http://localhost:9877/base/bower_components/angular-mocks/angular-mocks.js?e0aa095c6dc8275adf740aebb0bb115cc81dfd2c:2156)
+    at http://localhost:9877/absolute/Users/jhas/Development/Projects/NoteApp/Front%20End/src/main/resources/node_modules/karma-jasmine/lib/boot.js?a673f666b22b904e87980aab4f31696488a5a2bd:117
+    at http://localhost:9877/absolute/Users/jhas/Development/Projects/NoteApp/Front%20End/src/main/resources/node_modules/karma-jasmine/lib/adapter.js?7ee59a2c0ba91fffef258ef34e4953cc4ca2a6c0:171
+    at http://localhost:9877/karma.js:189
+    at http://localhost:9877/context.html:85,TypeError: 'undefined' is not an object (evaluating 'element.html')
+    at http://localhost:9877/base/app_components/thing-text/test/thing-text-directive.test.js?3e4e06ec841b1e164eedd70c28b1df3d3193fe3c:54
+    at http://localhost:9877/absolute/Users/jhas/Development/Projects/NoteApp/Front%20End/src/main/resources/node_modules/karma-jasmine/lib/boot.js?a673f666b22b904e87980aab4f31696488a5a2bd:117
+    at http://localhost:9877/absolute/Users/jhas/Development/Projects/NoteApp/Front%20End/src/main/resources/node_modules/karma-jasmine/lib/adapter.js?7ee59a2c0ba91fffef258ef34e4953cc4ca2a6c0:171
+    at http://localhost:9877/karma.js:189
+    at http://localhost:9877/context.html:85</div>
+		</div>
+	</div>
+	
+	
+</div>
+</body>
+</html>
+
