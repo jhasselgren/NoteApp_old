@@ -21,10 +21,7 @@ describe('Testing create-text-thing direcive', function(){
 
     //beforeEach(module('noteApp.templates'));
 
-
-
     beforeEach(angular.mock.inject(function(_$rootScope_, _$compile_){
-
 
         // The injector unwraps the underscores (_) from around the parameter names when matching
         $rootScope = _$rootScope_;
@@ -32,16 +29,25 @@ describe('Testing create-text-thing direcive', function(){
 
         elementHtml = angular.element('<create-text-thing save-fn="save(thing)" cancel-fn="cancelFn()"></create-text-thing>');
 
-
-
-
     }));
+    
+    it('should have marked the ting as a text thing', function(){
+    	var scope = $rootScope.$new();
+    	
+    	scope.cancelFn = function() {};
+    	
+    	var element = $compile(elementHtml)(scope);
+    	
+    	scope.$digest();
+    	
+    	var isloatedScope = element.isolateScope();
+    	
+    	expect(isloatedScope.thing).not.toBeUndefined();
+    	expect(isloatedScope.thing.type).not.toBeUndefined();
+    	expect(isloatedScope.thing.type).toBe('TEXT');
+    });
 
-
-
-
-
-    it('ensure that there is a save function and that linked function is called', function(){
+    it('should call the linked save function when save is called', function(){
         var scope = $rootScope.$new();
 
         scope.save = function (thing) {};
@@ -62,7 +68,7 @@ describe('Testing create-text-thing direcive', function(){
 
     });
 
-    it('ensure that there is a cancel function and that linked function is called', function(){
+    it('should call the linked cancel function when cancel is called', function(){
         var scope = $rootScope.$new();
 
         scope.cancelFn = function () {};
@@ -82,5 +88,24 @@ describe('Testing create-text-thing direcive', function(){
         expect(scope.cancelFn).toHaveBeenCalled();
 
         expect(isolateScope.thing.name).toBeUndefined();
+    });
+    
+    it('should reset the Thing data when cancel is pressed', function(){
+    	var scope = $rootScope.$new();
+    	
+    	scope.cancelFn = function() {};
+    	
+    	var element = $compile(elementHtml)(scope);
+    	
+    	scope.$digest();
+    	
+    	var isloatedScope = element.isolateScope();
+    	
+    	isloatedScope.thing.name = 'Test';
+    	
+    	isloatedScope.cancel();
+    	
+    	expect(isloatedScope.thing).not.toBeUndefined();
+    	expect(isloatedScope.thing.name).toBeUndefined();
     });
 });

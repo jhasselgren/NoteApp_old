@@ -25,22 +25,13 @@ describe('Testing show-text-thing direcive', function(){
         '/app_components/thing-text/popover/delete-popover.html',
         '/app_components/thing-text/edit-text.tpl.html'
     ));
-
-    //beforeEach(module('noteApp.templates'));
-
-
-
+    
     beforeEach(angular.mock.inject(function(_$rootScope_, _$compile_){
-
-
         // The injector unwraps the underscores (_) from around the parameter names when matching
         $rootScope = _$rootScope_;
         $compile = _$compile_;
 
         elementHtml = angular.element('<show-text-thing thing="thing" save-fn="save(thing)" remove-fn="removeFn()"></show-text-thing>');
-
-
-
 
     }));
 
