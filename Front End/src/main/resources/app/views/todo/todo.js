@@ -23,7 +23,7 @@
         .controller('TodoListController', function($location){
             this.openThing = function(id){
             	$location.path('/todo/'+id);
-            }
+            };
         })
         .controller('TodoShowController', function($scope, $log, $location, dataService, $routeParams, $aside){
 
@@ -41,11 +41,11 @@
 
                 $scope.isCreateThingMode = function(){
                     return isCreateThingMode;
-                }
+                };
 
                 $scope.cancelCreateThing = function(){
                     isCreateThingMode = false;
-                }
+                };
         	
                 $scope.save = function(thing){
                     dataService.saveThing(thing);
@@ -73,12 +73,12 @@
                         save: function(thing){
                             $scope.save(thing);
                         }
-                    }
+                    };
                 };
 
                 if(typeof $scope.currentTing != "undefined"){
                     $scope.progress = $scope.currentTing.status + '%';
-                };
+                }
 
                 $scope.$watch('currentTing', function(newVal, oldVal){
                     if(typeof $scope.currentTing != "undefined"){
@@ -92,7 +92,7 @@
         })
         .controller('ThingDirectiveController', function($scope){
             $scope.edit = function(thing){
-                $scope.save({thing: thing})
+                $scope.save({thing: thing});
             };
 
             $scope.aside =  {
@@ -113,7 +113,7 @@
             $scope.remove = function(){
                 var id = $scope.thing.id;
                 $scope.removeFn({id: id});
-            }
+            };
         })
         .directive('listTodo', function(dataService){
             return {
@@ -135,63 +135,12 @@
 
                     this.rowClick = function(id){
                         $scope.jhClick({id: id});
-                    }
+                    };
                 },
                 controllerAs: "listCtrl"
-            }
+            };
         })
-        .directive('showTodo', function(){
-        	return{
-	        	restrict: 'E',
-	        	scope: {
-        			thing: '=',
-        			save: '&',
-        			removeFn: '&'
-        		},
-        		templateUrl: 'views/todo/tmpl/show-todo.tmpl.html',
-        		controller: function($scope, $log){
-        			$scope.$watch('thing', angular.bind(this, function(newVal, oldVal){
-        				this.thing = $scope.thing
-        				if(typeof this.thing != "undefined"){
-            				this.progress = this.thing.status + '%';
-            			}
 
-        			}));
-
-        			this.edit = function(thing){
-        				$scope.save({thing: thing});
-        			};
-        			
-        			this.removeThing = function(id){
-        				$scope.removeFn({id: id});
-        			};
-        			
-        			this.thing = $scope.thing;
-        			
-        			if(typeof this.thing != "undefined"){
-        				this.progress = this.thing.status + '%';
-        			};
-        			
-        			this.logName = function(){
-                		$log.info(this.thing);
-                	};
-
-                    var copyFunction = function(){
-                        var copy = angular.copy($scope.thing);
-                        return copy;
-                    }
-
-                    this.aside =  {
-                        thing: copyFunction(),
-                        save: function(thing){
-                            this.edit.save(thing);
-                        }
-                    };
-        		},
-        		controllerAs: 'todoCtrl'
-        	}
-        	
-        })
             /*
         .directive('textThing', function(){
         	return{

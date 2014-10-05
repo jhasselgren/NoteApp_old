@@ -14,7 +14,7 @@ describe('Testing create-text-thing direcive', function(){
 
     var $element, $rootScope, elementHtml;
 
-    beforeEach(angular.mock.module('noteApp.directive.thing'));
+    beforeEach(angular.mock.module('noteApp.directive.thing.text'));
     beforeEach(angular.mock.module('/app_components/thing-text/create-text-tpl.html',
         '/app_components/thing-text/edit-text.tpl.html'
     ));

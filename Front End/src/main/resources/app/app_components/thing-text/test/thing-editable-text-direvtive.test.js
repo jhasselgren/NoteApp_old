@@ -7,7 +7,7 @@ describe('Testing create-text-thing direcive', function(){
 
     var $element, $rootScope, elementHtml;
 
-    beforeEach(angular.mock.module('noteApp.directive.thing'));
+    beforeEach(angular.mock.module('noteApp.directive.thing.text'));
     beforeEach(angular.mock.module('/app_components/thing-text/create-text-tpl.html',
         '/app_components/thing-text/edit-text.tpl.html'
     ));
@@ -37,7 +37,23 @@ describe('Testing create-text-thing direcive', function(){
 
          scope.$digest();
 
-         expect(element.html()).toContain('Thing Description');
+         expect(element.find('input').first().attr("ng-model")).toContain('thing.name');
     });
-    
+
+    it('should view description of thing in a element', function(){
+        var scope = $rootScope.$new();
+
+        scope.thing = {
+            id: 1,
+            name: 'Test Thing',
+            description: 'Thing Description'
+        };
+
+        var element = $compile(elementHtml)(scope);
+
+        scope.$digest();
+
+        expect(element.html()).toContain('ng-model="thing.description"');
+    });
+
 });

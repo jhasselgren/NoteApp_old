@@ -5,7 +5,10 @@ module.exports = function(config) {
     config.set({
 
         preprocessors: {
-            '**/*.html': 'ng-html2js'
+            '**/*.html': 'ng-html2js',
+            'app/views/**/*.js': ['jshint'],
+            'app/app_filters/*.js': ['jshint'],
+            'app/app_components/**/*.js' : ['jshint']
         },
 
         files: [

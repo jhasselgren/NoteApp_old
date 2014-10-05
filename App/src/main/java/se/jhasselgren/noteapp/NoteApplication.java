@@ -1,5 +1,7 @@
 package se.jhasselgren.noteapp;
 
+
+
 import io.dropwizard.Application;
 import io.dropwizard.assets.AssetsBundle;
 import io.dropwizard.db.DataSourceFactory;
@@ -8,6 +10,7 @@ import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
 import org.hibernate.context.internal.ManagedSessionContext;
 import se.jhasselgren.noteapp.core.*;
+import se.jhasselgren.noteapp.db.FileInformationDAO;
 import se.jhasselgren.noteapp.db.ThingDAO;
 import se.jhasselgren.noteapp.resources.HelloResource;
 import se.jhasselgren.noteapp.resources.ThingResource;
@@ -23,7 +26,7 @@ public class NoteApplication extends Application<NoteAppConfig> {
     }
 
     private final HibernateBundle<NoteAppConfig> hibernateBundle =
-            new HibernateBundle<NoteAppConfig>(Thing.class, ToDoThing.class, TextThing.class, FileThing.class, CommentThing.class, LinkThing.class) {
+            new HibernateBundle<NoteAppConfig>(Thing.class, ToDoThing.class, TextThing.class, FileThing.class, CommentThing.class, LinkThing.class, FileInformation.class) {
                 @Override
                 public DataSourceFactory getDataSourceFactory(NoteAppConfig noteAppConfig) {
                     return noteAppConfig.getDatabase();
@@ -46,11 +49,12 @@ public class NoteApplication extends Application<NoteAppConfig> {
         environment.jersey().setUrlPattern("/api/*");
 
         final ThingDAO thingDAO = new ThingDAO(hibernateBundle.getSessionFactory());
+        final FileInformationDAO fileDAO = new FileInformationDAO(hibernateBundle.getSessionFactory());
 
         insertTestData(thingDAO);
 
         environment.jersey().register(new HelloResource());
-        environment.jersey().register(new ThingResource(thingDAO));
+        environment.jersey().register(new ThingResource(thingDAO, fileDAO));
     }
 
 

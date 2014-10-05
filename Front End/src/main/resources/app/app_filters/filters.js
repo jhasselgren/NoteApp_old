@@ -5,5 +5,5 @@ angular.module('noteApp.filters', [])
     .filter('jhHtml', function($sce){
        return function(text){
            return $sce.trustAsHtml(text);
-       }
+       };
     });

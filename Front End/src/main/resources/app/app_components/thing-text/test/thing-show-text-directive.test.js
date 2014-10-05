@@ -19,7 +19,7 @@ describe('Testing show-text-thing direcive', function(){
 
     var $element, $rootScope, elementHtml;
 
-    beforeEach(angular.mock.module('noteApp.directive.thing'));
+    beforeEach(angular.mock.module('noteApp.directive.thing.text'));
     beforeEach(angular.mock.module('/app_components/thing-text/show-text.tpl.html',
         '/app_components/thing-text/aside/edit-text-aside.tpl.html',
         '/app_components/thing-text/popover/delete-popover.html',
@@ -45,13 +45,9 @@ describe('Testing show-text-thing direcive', function(){
         };
 
         scope.removeFn = function (id) {
-            debugger;
-            var x = id;
         };
 
         scope.save = function (thing) {
-            debugger;
-            var x = thing;
         };
 
         var element = $compile(elementHtml)(scope);
@@ -71,13 +67,9 @@ describe('Testing show-text-thing direcive', function(){
         };
 
         scope.removeFn = function (id) {
-            debugger;
-            var x = id;
         };
 
         scope.save = function (thing) {
-            debugger;
-            var x = thing;
         };
 
         var element = $compile(elementHtml)(scope);
@@ -97,13 +89,9 @@ describe('Testing show-text-thing direcive', function(){
         };
 
         scope.removeFn = function (id) {
-            debugger;
-            var x = id;
         };
 
         scope.save = function (thing) {
-            debugger;
-            var x = thing;
         };
 
         var element = $compile(elementHtml)(scope);

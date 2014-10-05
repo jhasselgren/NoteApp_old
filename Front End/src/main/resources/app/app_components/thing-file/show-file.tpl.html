@@ -1,0 +1,16 @@
+<!--<div flow-init="setParmForUpload()" flow-files-submitted="$flow.upload()" flow-success="fileUploaded($file, $message)" flow-drop flow-drag-enter="style={border:'4px solid green'}" flow-drag-leave="style={}" ng-style="style">-->
+<div>
+    <h3 id="4"><i class="fa fa-file-archive-o"></i> {{ thing.name }}</h3>
+    <p ng-bind-html="thing.description | jhHtml"></p>
+    <p>
+        <span class="label label-info"><i class="fa fa-download"></i> Download</span>
+        <a href class="label label-info"  data-placement="top-left" bs-popover="deletePopover.data" data-template="{{deletePopover.url}}"><i class="fa fa-trash"></i> Delete</a>
+        <span class="label label-info" title="File History" data-placement="top" bs-popover="deletePopover" data-template="app_components/thing-file/popover/file-history-popover.html"><i class="fa fa-history"></i> History</span>
+        <span class="label label-info"><i class="fa fa-ellipsis-h"></i></span>
+    </p>
+    <div class="btn btn-default btn-lg" ng-file-select="onFileSelect($files)">Upload file</div>
+
+</div>
+
+
+

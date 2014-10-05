@@ -21,19 +21,11 @@
     <div class="row" ng-show="isCreateThingMode()">
         <create-text-thing save-fn="create(thing)" cancel-fn="cancelCreateThing()"></create-text-thing>
     </div>
-    <div ng-repeat="child in currentTing.things | orderBy:child.id" class="row">
-        <p>{{child.type}}</p>
-        <div ng-if="child.type=='TEXT'">
-            <show-text-thing thing="child" remove-fn="deleteThing(id)" save-fn="save(thing)"></show-text-thing>
-        </div>
-        <div ng-if="child.type == 'COMMENT'">
-            <comment-thing thing="child" remove-fn="deleteThing(id)" save="save(thing)"></comment-thing>
-        </div>
-        <div ng-if="child.type == 'FILE'">
-            <show-file-thing thing="child" remove-fn="deleteThing(id)" save="save(thing)"></show-file-thing>
-        </div>
-        <div ng-if="child.type == 'LINK'">
-            <link-thing thing="child" remove-fn="deleteThing(id)" save="save(thing)"></link-thing>
-        </div>
+    <div ng-repeat="child in currentTing.things" class="row">
+        <show-text-thing thing="child" remove-fn="deleteThing(id)" save-fn="save(thing)" ng-if="child.type=='TEXT'"></show-text-thing>
+        <comment-thing thing="child" remove-fn="deleteThing(id)" save="save(thing)" ng-if="child.type == 'COMMENT'"></comment-thing>
+        <file-thing thing="child" remove-fn="deleteThing(id)" save="save(thing)" ng-if="child.type == 'FILE'"></file-thing>
+        <link-thing thing="child" remove-fn="deleteThing(id)" save="save(thing)" ng-if="child.type == 'LINK'"></link-thing>
+        <text-thing thing="child" remove-fn="deleteThing(id)" save="save(thing)" ng-if="child.type=='TEXT'"></text-thing>
     </div>
 </div>

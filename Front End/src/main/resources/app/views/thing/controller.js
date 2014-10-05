@@ -7,7 +7,7 @@
         .config(function($routeProvider){
             $routeProvider.when('/thing/create', {
                 templateUrl: 'views/thing/create.html'
-            })
+            });
         })
         .controller('ThingController', function(){
             this.things = thingMock;
@@ -41,6 +41,6 @@
 	        	description: 'En mock för en thing',
 	            type: 'text'
 	        }
-        ]
+        ];
 
 })();

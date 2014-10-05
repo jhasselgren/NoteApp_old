@@ -1,28 +1,28 @@
 package se.jhasselgren.noteapp.resources;
 
+import com.codahale.metrics.annotation.Timed;
+import com.google.common.io.*;
+import com.sun.jersey.core.header.FormDataContentDisposition;
+import com.sun.jersey.multipart.FormDataParam;
 import io.dropwizard.hibernate.UnitOfWork;
+import net.sf.jmimemagic.*;
+import se.jhasselgren.noteapp.core.FileInformation;
+import se.jhasselgren.noteapp.core.FileThing;
+import se.jhasselgren.noteapp.core.Thing;
+import se.jhasselgren.noteapp.core.ToDoThing;
+import se.jhasselgren.noteapp.db.FileInformationDAO;
+import se.jhasselgren.noteapp.db.ThingDAO;
 
-import java.util.List;
-
-import javax.ws.rs.Consumes;
-import javax.ws.rs.DELETE;
-import javax.ws.rs.GET;
-import javax.ws.rs.POST;
-import javax.ws.rs.PUT;
+import javax.ws.rs.*;
 import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
-
-import se.jhasselgren.noteapp.core.CommentThing;
-import se.jhasselgren.noteapp.core.FileThing;
-import se.jhasselgren.noteapp.core.LinkThing;
-import se.jhasselgren.noteapp.core.TextThing;
-import se.jhasselgren.noteapp.core.Thing;
-import se.jhasselgren.noteapp.core.ToDoThing;
-import se.jhasselgren.noteapp.db.ThingDAO;
+import java.io.*;
+import java.nio.file.*;
+import java.nio.file.Files;
+import java.util.Base64;
+import java.util.List;
 
 /**
  * Created by jhas on 2014-09-13.
@@ -33,9 +33,11 @@ import se.jhasselgren.noteapp.db.ThingDAO;
 public class ThingResource {
 
     private final ThingDAO thingDAO;
+    private final FileInformationDAO fileInformationDAO;
 
-    public ThingResource(ThingDAO thingDAO) {
+    public ThingResource(ThingDAO thingDAO, FileInformationDAO fileInformationDAO) {
         this.thingDAO = thingDAO;
+        this.fileInformationDAO = fileInformationDAO;
     }
 
     @Path("create")
@@ -135,5 +137,121 @@ public class ThingResource {
     	 thingDAO.delete(thing);
     	 
     	 return Response.ok(parent).build();
+    }
+
+    @POST
+    @Path("{id}/upload")
+    @Consumes(MediaType.MULTIPART_FORM_DATA)
+    @UnitOfWork
+    @Timed
+    public Response uploadFile(@PathParam("id") long id,
+                               @FormDataParam("file") final InputStream inputStream,
+                               @FormDataParam("file") final FormDataContentDisposition fileDetails){
+
+        Thing fetchedFile = thingDAO.findById(id).orNull();
+
+        if(fetchedFile == null){
+            return Response.status(Status.BAD_REQUEST).entity("No thing with id: " + id + " could be found").build();
+        }
+
+        FileThing fileThing = null;
+
+        if(fetchedFile instanceof FileThing){
+            fileThing = (FileThing) fetchedFile;
+        }
+        else{
+            return Response.status(Status.BAD_REQUEST).entity("Thing with id: " + id + " is not a file thing").build();
+        }
+
+       // boolean hasParent = fileThing.getParent() != null;
+
+        String url = fileThing.getId() + "";
+
+        Thing current = fileThing;
+
+        while (current.getParent() != null){
+            url = current.getParent().getId() + "/" + url;
+            current = current.getParent();
+        }
+
+        java.nio.file.Path pathToFolder = Paths.get(System.getProperty("user.home"), "NoteApp", "Files", url);
+
+
+        String fileName = com.google.common.io.Files.getNameWithoutExtension(fileDetails.getFileName());
+        String fileExtension = com.google.common.io.Files.getFileExtension(fileDetails.getFileName());
+
+        String prefix = "";
+
+        int i = 1;
+
+        while (Files.exists(pathToFolder.resolve(fileName+prefix+"."+fileExtension))){
+            prefix = "_"+i;
+            i++;
+        }
+
+        java.nio.file.Path pathToFile = pathToFolder.resolve(fileName+prefix+"."+fileExtension);
+        FileInformation fileInformation = new FileInformation();
+
+        try {
+            if(Files.notExists(pathToFile.getParent())) {
+                com.google.common.io.Files.createParentDirs(pathToFile.toFile());
+            }
+            java.nio.file.Files.copy(inputStream, pathToFile);
+            fileInformation.setPath(pathToFile.toString());
+
+            try {
+                Magic parser = new Magic();
+
+                MagicMatch match = parser.getMagicMatch(pathToFile.toFile(), true);
+
+                String fileType = match.getMimeType();
+                fileInformation.setFileType(fileType);
+            } catch (MagicParseException e) {
+                e.printStackTrace();
+            } catch (MagicMatchNotFoundException e) {
+                e.printStackTrace();
+            } catch (MagicException e) {
+                e.printStackTrace();
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            return Response.status(Status.INTERNAL_SERVER_ERROR).entity("Unable to save file").build();
+        }
+
+        fileThing.addFile(fileInformation);
+
+        thingDAO.create(fileThing);
+
+        return Response.ok(fileThing).build();
+    }
+
+    @GET
+    @Path("download/{id}")
+    @UnitOfWork
+    @Produces(MediaType.APPLICATION_OCTET_STREAM)
+    public Response downloadFile(@PathParam("id") long fileId){
+        FileInformation fileInformation = fileInformationDAO.findById(fileId).orNull();
+
+        if(fileInformation == null){
+            return Response.status(Status.BAD_REQUEST).entity("Could not find any file with ID:" + fileId).build();
+        }
+
+        java.nio.file.Path pathToFile = Paths.get(fileInformation.getPath());
+
+        if(Files.exists(pathToFile)){
+
+            File file = pathToFile.toFile();
+
+            String fileExtension = com.google.common.io.Files.getFileExtension(fileInformation.getPath());
+
+            String fileName = fileInformation.getFileThing().getName() + "_" + fileInformation.getVersion() + "." +fileExtension;
+
+            return Response.ok(file, MediaType.valueOf(fileInformation.getFileType())).
+                    header("Content-Disposition", "attachment; filename=\"" + fileName + "\"").
+                    build();
+        }
+
+        return Response.status(Status.INTERNAL_SERVER_ERROR).entity("Unable to locate file on server").build();
     }
 }
