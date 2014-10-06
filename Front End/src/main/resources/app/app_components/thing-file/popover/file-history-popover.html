@@ -1,12 +1,14 @@
 <div class="popover">
-  <div class="arrow"></div>
-  <h3 class="popover-title" ng-bind="title" ng-show="title"></h3>
-  <div class="popover-content">
-<pre>2014-10-12 current
-2014-10-11 v 5
-2014-10-11 v 4
-2014-10-11 v 3
-2014-10-11 v 2</pre>
-	<div class="form-actions"><button type="button" class="btn btn-danger" ng-click="$hide()">Close</button> <button type="button" class="btn btn-primary" ng-click="popover.saved=true;$hide()">Save changes</button></div>
-  </div>
+    <div class="arrow"></div>
+        <h3 class="popover-title" ng-bind="title" ng-show="title"></h3>
+        <div class="popover-content" class="well">
+            <p data-ng-repeat="file in fileArchive" >
+                <a target="_self" ng-href="api/thing/download/{{file.id}}" class="label label-info">
+                    <i class="fa fa-download"></i> {{file.created | date: 'yyyy-MM-dd'}} v {{file.version}}
+                </a>
+            </p>
+            <div class="form-actions">
+                <button type="button" class="btn btn-default btn-sm" ng-click="$hide()">Close</button>
+            </div>
+    </div>
 </div>

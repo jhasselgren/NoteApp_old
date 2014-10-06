@@ -1,11 +1,9 @@
 package se.jhasselgren.noteapp.resources;
 
 import com.codahale.metrics.annotation.Timed;
-import com.google.common.io.*;
 import com.sun.jersey.core.header.FormDataContentDisposition;
 import com.sun.jersey.multipart.FormDataParam;
 import io.dropwizard.hibernate.UnitOfWork;
-import net.sf.jmimemagic.*;
 import se.jhasselgren.noteapp.core.FileInformation;
 import se.jhasselgren.noteapp.core.FileThing;
 import se.jhasselgren.noteapp.core.Thing;
@@ -14,14 +12,14 @@ import se.jhasselgren.noteapp.db.FileInformationDAO;
 import se.jhasselgren.noteapp.db.ThingDAO;
 
 import javax.ws.rs.*;
-import javax.ws.rs.Path;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
-import java.io.*;
-import java.nio.file.*;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 import java.nio.file.Files;
-import java.util.Base64;
+import java.nio.file.Paths;
 import java.util.List;
 
 /**
@@ -146,7 +144,8 @@ public class ThingResource {
     @Timed
     public Response uploadFile(@PathParam("id") long id,
                                @FormDataParam("file") final InputStream inputStream,
-                               @FormDataParam("file") final FormDataContentDisposition fileDetails){
+                               @FormDataParam("file") final FormDataContentDisposition fileDetails,
+                               @FormDataParam("fileType") String fileType){
 
         Thing fetchedFile = thingDAO.findById(id).orNull();
 
@@ -165,12 +164,12 @@ public class ThingResource {
 
        // boolean hasParent = fileThing.getParent() != null;
 
-        String url = fileThing.getId() + "";
+        String url = fileThing.getId() + " " + fileThing.getName();
 
         Thing current = fileThing;
 
         while (current.getParent() != null){
-            url = current.getParent().getId() + "/" + url;
+            url = current.getParent().getId() + " " + current.getName() + "/" + url;
             current = current.getParent();
         }
 
@@ -198,21 +197,7 @@ public class ThingResource {
             }
             java.nio.file.Files.copy(inputStream, pathToFile);
             fileInformation.setPath(pathToFile.toString());
-
-            try {
-                Magic parser = new Magic();
-
-                MagicMatch match = parser.getMagicMatch(pathToFile.toFile(), true);
-
-                String fileType = match.getMimeType();
-                fileInformation.setFileType(fileType);
-            } catch (MagicParseException e) {
-                e.printStackTrace();
-            } catch (MagicMatchNotFoundException e) {
-                e.printStackTrace();
-            } catch (MagicException e) {
-                e.printStackTrace();
-            }
+            fileInformation.setFileType(fileType);
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -222,6 +207,8 @@ public class ThingResource {
         fileThing.addFile(fileInformation);
 
         thingDAO.create(fileThing);
+
+        fileThing = (FileThing)thingDAO.findById(fileThing.getId()).orNull();
 
         return Response.ok(fileThing).build();
     }
@@ -245,9 +232,22 @@ public class ThingResource {
 
             String fileExtension = com.google.common.io.Files.getFileExtension(fileInformation.getPath());
 
-            String fileName = fileInformation.getFileThing().getName() + "_" + fileInformation.getVersion() + "." +fileExtension;
+            String fileName = fileInformation.getFileThing().getName() + "_v" + fileInformation.getVersion() + "." +fileExtension;
 
-            return Response.ok(file, MediaType.valueOf(fileInformation.getFileType())).
+            MediaType mediaType = null;
+
+            if(fileInformation.getFileType() != null) {
+                try {
+                    mediaType = MediaType.valueOf(fileInformation.getFileType());
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+            }
+            if(mediaType == null){
+                mediaType = MediaType.APPLICATION_OCTET_STREAM_TYPE;
+            }
+
+            return Response.ok(file, mediaType).
                     header("Content-Disposition", "attachment; filename=\"" + fileName + "\"").
                     build();
         }

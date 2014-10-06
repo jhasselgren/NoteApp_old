@@ -1,15 +1,21 @@
 <!--<div flow-init="setParmForUpload()" flow-files-submitted="$flow.upload()" flow-success="fileUploaded($file, $message)" flow-drop flow-drag-enter="style={border:'4px solid green'}" flow-drag-leave="style={}" ng-style="style">-->
-<div>
-    <h3 id="4"><i class="fa fa-file-archive-o"></i> {{ thing.name }}</h3>
+<div ng-file-drop="onFileSelect($files)" ng-file-drag-over-class="bg-info">
+    <h3 ng-hide="uploadinprogress" style="cursor: pointer" ng-file-select="onFileSelect($files)"><i class="fa fa-file-archive-o"></i> {{ thing.name }}</h3>
+    <div ng-show="uploadinprogress" class="progress">
+        <div class="progress-bar progress-bar-info progress-bar-striped" role="progressbar" aria-valuenow="{{progress}}" aria-valuemin="0" aria-valuemax="100" ng-style="progressstyle">
+
+        </div>
+    </div>
     <p ng-bind-html="thing.description | jhHtml"></p>
-    <p>
-        <span class="label label-info"><i class="fa fa-download"></i> Download</span>
+    <p ng-hide="thing.hasFile">
+        <label class="label label-info">No file uploaded</label>
+    </p>
+    <p ng-show="thing.hasFile">
+        <a target="_self" ng-href="api/thing/download/{{thing.file.id}}" download="thing.name" class="label label-info"><i class="fa fa-download"></i> Download</a>
         <a href class="label label-info"  data-placement="top-left" bs-popover="deletePopover.data" data-template="{{deletePopover.url}}"><i class="fa fa-trash"></i> Delete</a>
-        <span class="label label-info" title="File History" data-placement="top" bs-popover="deletePopover" data-template="app_components/thing-file/popover/file-history-popover.html"><i class="fa fa-history"></i> History</span>
+        <a href class="label label-info" title="File History" data-placement="top" bs-popover="historyPopover.data" data-template="{{historyPopover.url}}"><i class="fa fa-history"></i> History</a>
         <span class="label label-info"><i class="fa fa-ellipsis-h"></i></span>
     </p>
-    <div class="btn btn-default btn-lg" ng-file-select="onFileSelect($files)">Upload file</div>
-
 </div>
 
 

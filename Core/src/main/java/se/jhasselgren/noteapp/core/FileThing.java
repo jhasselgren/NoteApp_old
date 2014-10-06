@@ -2,6 +2,7 @@ package se.jhasselgren.noteapp.core;
 
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 
 import java.util.*;
@@ -34,6 +35,7 @@ public class FileThing extends Thing {
 		}
 	}
 
+    @JsonProperty("hasFile")
     public boolean hasFile(){
         return file != null;
     }

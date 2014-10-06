@@ -19,6 +19,8 @@
             },
             controller: function showFileThingCtrl($scope, $log, $upload){
 
+                $scope.uploadInProgress = false;
+
                 var remove = function(){
                     var id = $scope.thing.id;
                     $scope.removeFn({id: id});
@@ -34,6 +36,15 @@
                         }
                     }
                 };
+
+                $scope.historyPopover = {
+                    url: 'app_components/thing-file/popover/file-history-popover.html',
+                    data: {
+                        title: 'File History',
+                        fileArchive: $scope.thing.fileArchive
+                    }
+                };
+
                 $scope.editAside = {
                     url: '/app_components/thing-file/aside/edit-file-aside.tpl.html',
                     data: {
@@ -45,16 +56,33 @@
                 };
 
                 $scope.onFileSelect = function($files){
+                    $scope.uploadinprogress = true;
+                    $scope.progress = 0;
+                    $scope.progressstyle = {'width': '0%'};
                     var file = $files[0];
+
+
                     $scope.upload = $upload.upload({
                         url: 'api/thing/'+$scope.thing.id+'/upload',
+                        data: {fileType: file.type},
                         file: file
                     }).progress(function(evt){
                         $log.info('percent: ' + parseInt(100.0 * evt.loaded / evt.total));
+
+                        $scope.progress = parseInt(100.0 * evt.loaded / evt.total);
+                        $scope.progressstyle = {'width': $scope.progress+'%'};
+
+
                     }).success(function(data){
                         $scope.thing = data;
+
+                        $scope.historyPopover.data.fileArchive = $scope.thing.fileArchive;
+
+                        $scope.uploadinprogress = false;
+                    }).error(function(){
+                        $scope.uploadinprogress = false;
                     });
-                }
+                };
 
 
                 var save = function(updatedThing){

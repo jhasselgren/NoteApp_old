@@ -1,6 +1,7 @@
 package se.jhasselgren.noteapp.core;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.joda.time.DateTime;
 
 import javax.persistence.*;
 
@@ -15,6 +16,7 @@ public class FileInformation {
     private String path;
     private String fileType;
     private int version;
+    private final long created = DateTime.now().getMillis();
 
     @ManyToOne
     @JoinColumn(name = "fileThing_id")
@@ -36,10 +38,11 @@ public class FileInformation {
         this.path = path;
     }
 
+    @JsonIgnore
     public String getFileType() {
         return fileType;
     }
-
+    @JsonIgnore
     public void setFileType(String fileType) {
         this.fileType = fileType;
     }
@@ -58,5 +61,9 @@ public class FileInformation {
     @JsonIgnore
     public void setFileThing(FileThing fileThing) {
         this.fileThing = fileThing;
+    }
+
+    public long getCreated() {
+        return created;
     }
 }
