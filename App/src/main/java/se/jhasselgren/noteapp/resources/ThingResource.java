@@ -20,6 +20,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.Dictionary;
+import java.util.Hashtable;
 import java.util.List;
 
 /**
@@ -93,9 +95,18 @@ public class ThingResource {
 	    ToDoThing parent = (ToDoThing) nonValidatedParent;
 	    	
     	parent.addChild(thing);
+
+        thing.setParent(parent);
     	
-        Thing createdThing = thingDAO.create(parent);
-        return Response.ok(parent).build();
+        Thing createdThing = thingDAO.create(thing);
+
+        Dictionary<String, Object> result = new Hashtable<>();
+
+        result.put("parent", parent);
+        result.put("id", createdThing.getId());
+        result.put("thing", createdThing);
+
+        return Response.ok(result).build();
     }
 
     @Path("all")

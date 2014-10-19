@@ -21,6 +21,7 @@ public class LinkThing extends Thing {
 			LinkThing inputThing = (LinkThing) thing;
 			this.setName(inputThing.getName());
 			this.setDescription(inputThing.getDescription());
+            this.setLink(inputThing.getLink());
 		}
 		else{
 			throw new IllegalArgumentException("Input is not a instance of LinkThing");
@@ -34,6 +35,8 @@ public class LinkThing extends Thing {
 	public void setLink(String link) {
 		this.link = link;
 	}
-	
-	
+
+
+
+
 }

@@ -1,31 +1,25 @@
 /**
- * Created by jhas on 2014-09-23.
+ * Created by jhas on 2014-10-08.
  */
 (function(){
-    var app = angular.module('noteApp.directive.thing.todo', ['mgcrea.ngStrap', 'noteApp.filters']);
-        /*
-        * As a User I want to see the choosen text object
-        * As a User I want to be able to edit the object
-        * As a User I want to be able to delete the object
-        * */
-    app.directive('showTodoThing', function showTodoThing(){
+    var app = angular.module('noteApp.directive.thing.link', ['mgcrea.ngStrap', 'noteApp.filters']);
+
+    app.directive('showLinkThing', function showLinkThing(){
         return{
             restrict: 'E',
             scope: {
                 thing: '=',
                 removeFn: '&',
-                saveFn: '&',
-                showMenu: '@'
+                saveFn: '&'
             },
-            controller: function showTodoThingCtrl($scope, $log){
-
+            controller: function showLinkThigCtrl($scope){
                 var remove = function(){
                     var id = $scope.thing.id;
                     $scope.removeFn({id: id});
                 };
 
                 $scope.deletePopover = {
-                    url: '/app_components/thing-todo/popover/delete-popover.html',
+                    url: '/app_components/thing-link/popover/delete-popover.html',
                     data: {
                         title: 'Delete',
                         name: $scope.thing.name,
@@ -35,7 +29,7 @@
                     }
                 };
                 $scope.editAside = {
-                    url: '/app_components/thing-todo/aside/edit-todo-aside.tpl.html',
+                    url: '/app_components/thing-link/aside/edit-link-aside.tpl.html',
                     data: {
                         thing: angular.copy($scope.thing),
                         call: function(updatedThing){
@@ -44,43 +38,38 @@
                     }
                 };
 
-                $scope.progressStyle = function(){
-                    var widthStyle = $scope.thing.status + '%';
-                    var style = {width: widthStyle};
-                    return style;
-                };
-
                 var save = function(updatedThing){
                     $scope.saveFn({thing: updatedThing});
                 };
             },
-            templateUrl: '/app_components/thing-todo/show-todo.tpl.html'
-
-        };
+            templateUrl: '/app_components/thing-link/show-link.tpl.html'
+        }
     });
-    app.directive('editableTodoThing', function editableTodoThing(){
+
+    app.directive('editableLinkThing', function editableLinkThing(){
         return{
             restrict: 'E',
             scope: {
                 thing: '='
             },
-            controller: function editableTextThingCtrl($scope){
+            controller: function editableLinkThingCtrl($scope){
 
             },
-            templateUrl: '/app_components/thing-todo/edit-todo.tpl.html'
+            templateUrl: '/app_components/thing-link/edit-link.tpl.html'
         };
     });
-    app.directive('createTodoThing', function createTodoThing(){
+
+    app.directive('createLinkThing', function createLinkThing(){
         return{
             restrict: 'E',
             scope: {
                 saveFn: '&',
                 cancelFn: '&?'
             },
-            controller: function createTodoThingCtrl($scope){
+            controller: function createLinkThingCtrl($scope){
                 var init = function(){
                     $scope.thing = {
-                        type: 'TODO'
+                        type: 'LINK'
                     };
                 };
 
@@ -95,7 +84,8 @@
 
                 init();
             },
-            templateUrl: '/app_components/thing-todo/create-todo-tpl.html'
+            templateUrl: '/app_components/thing-link/create-link-tpl.html'
         };
     });
+
 })();

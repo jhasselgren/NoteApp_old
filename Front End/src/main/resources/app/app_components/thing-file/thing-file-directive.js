@@ -19,7 +19,7 @@
             },
             controller: function showFileThingCtrl($scope, $log, $upload){
 
-                $scope.uploadInProgress = false;
+                //$scope.uploadInProgress = false;
 
                 var remove = function(){
                     var id = $scope.thing.id;
@@ -56,32 +56,29 @@
                 };
 
                 $scope.onFileSelect = function($files){
-                    $scope.uploadinprogress = true;
+
                     $scope.progress = 0;
                     $scope.progressstyle = {'width': '0%'};
                     var file = $files[0];
 
 
-                    $scope.upload = $upload.upload({
-                        url: 'api/thing/'+$scope.thing.id+'/upload',
-                        data: {fileType: file.type},
-                        file: file
-                    }).progress(function(evt){
-                        $log.info('percent: ' + parseInt(100.0 * evt.loaded / evt.total));
+                    $scope.upload = uploadFile($upload, $scope, file)
+                        .progress(function(evt){
+                            $scope.uploadinprogress = true;
 
-                        $scope.progress = parseInt(100.0 * evt.loaded / evt.total);
-                        $scope.progressstyle = {'width': $scope.progress+'%'};
+                            $log.info('percent: ' + parseInt(100.0 * evt.loaded / evt.total));
+
+                            $scope.progress = parseInt(100.0 * evt.loaded / evt.total);
+                            $scope.progressstyle = {'width': $scope.progress+'%'};
 
 
-                    }).success(function(data){
-                        $scope.thing = data;
-
-                        $scope.historyPopover.data.fileArchive = $scope.thing.fileArchive;
-
-                        $scope.uploadinprogress = false;
-                    }).error(function(){
-                        $scope.uploadinprogress = false;
-                    });
+                        }).success(function(data){
+                            $scope.thing = data;
+                            $scope.historyPopover.data.fileArchive = $scope.thing.fileArchive;
+                            $scope.uploadinprogress = false;
+                        }).error(function(){
+                            $scope.uploadinprogress = false;
+                        });
                 };
 
 
@@ -93,6 +90,18 @@
 
         };
     });
+
+    var uploadFile = function(upload, scope, file){
+        var promise = upload.upload({
+            url: 'api/thing/'+scope.thing.id+'/upload',
+            data: {fileType: file.type},
+            file: file
+        });
+
+        return promise;
+    };
+
+
     app.directive('editableFileThing', function editableFileThing(){
         return{
             restrict: 'E',
@@ -110,9 +119,10 @@
             restrict: 'E',
             scope: {
                 saveFn: '&',
+                refreshFn: '&',
                 cancelFn: '&?'
             },
-            controller: function createFileThingCtrl($scope){
+            controller: function createFileThingCtrl($scope, $upload, $log){
                 var init = function(){
                     $scope.thing = {
                         type: 'FILE'
@@ -120,12 +130,47 @@
                 };
 
                 $scope.save = function(){
-                    $scope.saveFn({thing: $scope.thing});
+                    var promise = $scope.saveFn({thing: $scope.thing});
+
+                    promise.then(function(response){
+                        $scope.thing = response.data.thing;
+                        $scope.upload = uploadFile($upload, $scope, file)
+                            .progress(function(evt){
+                                $scope.uploadinprogress = true;
+
+                                $log.info('percent: ' + parseInt(100.0 * evt.loaded / evt.total));
+
+                                $scope.progress = parseInt(100.0 * evt.loaded / evt.total);
+                                $scope.progressstyle = {'width': $scope.progress+'%'};
+
+                            }).success(function(data){
+                                $scope.uploadinprogress = false;
+                                $scope.refreshFn();
+                            }).error(function(){
+                                $scope.uploadinprogress = false;
+                            });
+                    }, null);
+
                 };
 
                 $scope.cancel =function(){
                     init();
                     $scope.cancelFn();
+                };
+
+                var file;
+
+                $scope.onFileSelect = function($files){
+
+                    $scope.progress = 0;
+                    $scope.progressstyle = {'width': '0%'};
+                    file = $files[0];
+
+                    $log.info(file);
+
+                    $scope.thing.name = file.name.replace(/\.[^/.]+$/, "");
+
+                    //$scope.upload = uploadFile($upload, $scope, $log, file);
                 };
 
                 init();

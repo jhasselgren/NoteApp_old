@@ -28,10 +28,16 @@
         .controller('TodoShowController', function($scope, $log, $location, dataService, $routeParams, $aside){
 
                 var isCreateThingMode = false;
+                var thingId;
 
                 var init = function(){
-                    var thingId = $routeParams.thingId;
+                    thingId = $routeParams.thingId;
                     dataService.registerObserverCallback(updateCurrentThing);
+                    $scope.reload();
+                };
+
+
+                $scope.reload = function(){
                     dataService.setCurrentThing(thingId);
                 };
 
@@ -48,8 +54,10 @@
                 };
         	
                 $scope.save = function(thing){
-                    dataService.saveThing(thing);
+                    return dataService.saveThing(thing);
                 };
+
+
 
                 var updateCurrentThing = function(){
                     $scope.currentTing = dataService.getCurrentThing();
@@ -60,11 +68,15 @@
                 };
 
                 $scope.create =function(thing){
-                    dataService.addChild(thing).then(function(data){
+                    var promise = dataService.addChild(thing);
 
+                    promise.then(function(data){
+                        isCreateThingMode = false;
                     }, function(error){
                         $log.error(error);
                     });
+
+                    return promise;
                 };
 
                 $scope.aside =  function(){
